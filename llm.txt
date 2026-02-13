@@ -1,0 +1,289 @@
+PROJECT: Multi-Frontend Headless Ecommerce Platform
+AGENT ROLE: Senior Frontend Architect + Systems Designer
+
+PRIMARY DIRECTIVE
+Build a reusable, modular, atomic component-based ecommerce frontend platform.
+
+You are NOT building pages.
+You are building a reusable UI system that can generate unlimited storefronts.
+
+--------------------------------------------------
+
+STACK
+- Astro (static-first rendering)
+- Bulma (compiled theme engine)
+- Alpine.js (micro-interactions only)
+- Shopify Headless backend
+- Shopify Web Components ONLY for dynamic price + inventory
+
+--------------------------------------------------
+
+ARCHITECTURAL PHILOSOPHY (MANDATORY)
+
+Follow Atomic Design methodology:
+
+Atoms → Molecules → Organisms → Layouts → Pages
+
+Rules:
+- Every UI piece must be reusable
+- No component should be page-specific
+- Components must not depend on page context
+- Styling must be token-based
+- Logic must be isolated
+
+Reusable components are the highest priority requirement.
+
+--------------------------------------------------
+
+PHASED EXECUTION PLAN
+
+Execute phases in order.
+Do not skip.
+
+----------------------------------------
+PHASE 1 — FOUNDATION ARCHITECTURE
+----------------------------------------
+
+Create project structure:
+
+/sites
+   /site-key
+      theme.config.json
+      routes.config.json
+
+/src
+   /atoms
+   /molecules
+   /organisms
+   /layouts
+   /pages
+   /lib
+   /styles
+   /webcomponents
+
+/docs
+
+Implement config loader engine.
+
+System must dynamically generate sites from config.
+
+----------------------------------------
+PHASE 2 — DESIGN TOKEN SYSTEM
+----------------------------------------
+
+Create global design token system.
+
+Tokens must include:
+- colors
+- typography
+- spacing scale
+- border radius
+- shadows
+- transitions
+- z-index scale
+
+Tokens must be injected into Bulma Sass compiler.
+
+No hardcoded values allowed inside components.
+
+----------------------------------------
+PHASE 3 — ATOMS
+----------------------------------------
+
+Build smallest reusable primitives:
+
+Buttons
+Inputs
+Badges
+Labels
+Icons
+Images
+Text blocks
+Price label
+Stock label
+Container
+Spacer
+
+Requirements:
+- zero layout logic
+- no dependencies
+- theme-driven
+
+----------------------------------------
+PHASE 4 — MOLECULES
+----------------------------------------
+
+Combine atoms into reusable UI elements:
+
+ProductPrice
+ProductStockIndicator
+ProductBadge
+VariantSelector
+QuantitySelector
+CardMedia
+CardContent
+BreadcrumbItem
+FormField
+
+Each molecule must:
+
+- accept props
+- be independent
+- never fetch data directly
+
+----------------------------------------
+PHASE 5 — ORGANISMS
+----------------------------------------
+
+Complex reusable sections:
+
+ProductCard
+ProductGrid
+FiltersPanel
+Header
+Footer
+ProductGallery
+ProductDetails
+CartDrawer
+RelatedProducts
+
+Rules:
+- must work anywhere
+- must accept data as props
+- no API calls inside
+
+----------------------------------------
+PHASE 6 — SHOPIFY DYNAMIC SLOTS
+----------------------------------------
+
+Create two special reusable dynamic components:
+
+<PriceSlot />
+<StockSlot />
+
+They must:
+
+- lazy load Shopify Web Components
+- hydrate only themselves
+- show skeleton loading
+- show fallback if fails
+- never block render
+
+No other dynamic Shopify integration allowed.
+
+----------------------------------------
+PHASE 7 — LAYOUT SYSTEM
+----------------------------------------
+
+Create layout templates:
+
+DefaultLayout
+CatalogLayout
+ProductLayout
+ContentLayout
+
+Layouts must:
+
+- only arrange organisms
+- contain zero business logic
+
+----------------------------------------
+PHASE 8 — MULTI-SITE ENGINE
+----------------------------------------
+
+Build system must:
+
+Loop through /sites directory
+Load config
+Compile theme
+Generate site
+Output:
+
+/dist/site-name
+
+No manual configuration required.
+
+----------------------------------------
+PHASE 9 — PERFORMANCE CONSTRAINTS
+----------------------------------------
+
+- zero client JS for static content
+- Alpine only for interaction
+- no hydration of full pages
+- component-level hydration only
+- CSS must be purged
+- JS must be minimal
+
+Target:
+Mobile Lighthouse ≥ 90
+
+----------------------------------------
+PHASE 10 — SEO SYSTEM
+----------------------------------------
+
+Auto-generate:
+
+meta tags
+canonical
+OG tags
+JSON-LD Product schema
+sitemap
+robots.txt
+
+Must work per site automatically.
+
+----------------------------------------
+PHASE 11 — TESTING
+----------------------------------------
+
+Generate:
+
+Unit tests:
+- config parser
+- token generator
+
+E2E tests:
+- product page loads
+- price updates dynamically
+- variant selection updates price
+
+----------------------------------------
+PHASE 12 — DOCUMENTATION
+----------------------------------------
+
+Generate documentation:
+
+/docs/ARCHITECTURE.md
+/docs/COMPONENT_SYSTEM.md
+/docs/THEME_SYSTEM.md
+/docs/CREATE_NEW_SITE.md
+
+Documentation must allow another developer to create a new storefront in under 10 minutes.
+
+----------------------------------------
+STRICT CONSTRAINTS
+
+DO NOT:
+- use React/Vue
+- use large JS libraries
+- embed Shopify scripts globally
+- couple components to pages
+
+DO:
+- use native JS
+- keep bundle minimal
+- enforce separation of concerns
+
+----------------------------------------
+SUCCESS CRITERIA
+
+Platform is complete when:
+
+1) A new storefront can be created by duplicating a config file
+2) Build generates full site
+3) No code changes required
+4) All UI built from reusable components
+5) No duplicated UI code exists
+
+----------------------------------------
+END SPEC
