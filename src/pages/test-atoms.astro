@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../atoms/Button.astro';
+import Input from '../atoms/Input.astro';
+import Badge from '../atoms/Badge.astro';
+import Label from '../atoms/Label.astro';
+import Icon from '../atoms/Icon.astro';
+import Image from '../atoms/Image.astro';
+import TextBlock from '../atoms/TextBlock.astro';
+import PriceLabel from '../atoms/PriceLabel.astro';
+import StockLabel from '../atoms/StockLabel.astro';
+import Container from '../atoms/Container.astro';
+import Spacer from '../atoms/Spacer.astro';
+---
+
+<BaseLayout title="Atoms Test">
+  <Container class="section">
+    <TextBlock tag="h1" size="2">Atoms Gallery</TextBlock>
+    <Spacer size="4" />
+
+    <TextBlock tag="h2" size="4">Buttons</TextBlock>
+    <div class="buttons">
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="success" outlined>Success Outlined</Button>
+      <Button loading>Loading</Button>
+    </div>
+
+    <Spacer size="4" />
+
+    <TextBlock tag="h2" size="4">Inputs</TextBlock>
+    <div class="field">
+      <Label>Username</Label>
+      <div class="control">
+        <Input placeholder="Enter username" />
+      </div>
+    </div>
+    <div class="field">
+      <Label required>Password</Label>
+      <div class="control">
+        <Input type="password" placeholder="Enter password" error />
+      </div>
+      <p class="help is-danger">Password is required</p>
+    </div>
+
+    <Spacer size="4" />
+
+    <TextBlock tag="h2" size="4">Badges</TextBlock>
+    <div class="tags">
+      <Badge variant="info">Info</Badge>
+      <Badge variant="warning" rounded>Warning Rounded</Badge>
+    </div>
+
+    <Spacer size="4" />
+
+    <TextBlock tag="h2" size="4">Icons</TextBlock>
+    <div class="is-flex is-gap-2">
+      <Icon name="cart" size="medium" />
+      <Icon name="search" size="medium" />
+      <Icon name="user" size="medium" />
+    </div>
+
+    <Spacer size="4" />
+
+    <TextBlock tag="h2" size="4">Price & Stock</TextBlock>
+    <PriceLabel price={19.99} compareAtPrice={29.99} />
+    <StockLabel quantity={5} />
+    <StockLabel quantity={0} />
+  </Container>
+</BaseLayout>

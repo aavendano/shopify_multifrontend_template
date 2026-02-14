@@ -1,0 +1,32 @@
+---
+interface Props {
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
+  size?: '1' | '2' | '3' | '4' | '5' | '6' | '7';
+  weight?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
+  align?: 'left' | 'centered' | 'right' | 'justified';
+  color?: string;
+  class?: string;
+}
+
+const {
+  tag: Tag = 'p',
+  size,
+  weight,
+  align,
+  color,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  size && `is-size-${size}`,
+  weight && `has-text-weight-${weight}`,
+  align && `has-text-${align}`,
+  color && `has-text-${color}`,
+  className
+].filter(Boolean).join(' ');
+---
+
+<Tag class={classes} {...rest}>
+  <slot />
+</Tag>

@@ -1,0 +1,54 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark' | 'link' | 'white' | 'black' | 'text' | 'ghost';
+  size?: 'small' | 'normal' | 'medium' | 'large';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  fullWidth?: boolean;
+  loading?: boolean;
+  outlined?: boolean;
+  inverted?: boolean;
+  rounded?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'normal',
+  href,
+  type = 'button',
+  disabled = false,
+  fullWidth = false,
+  loading = false,
+  outlined = false,
+  inverted = false,
+  rounded = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'button',
+  `is-${variant}`,
+  size !== 'normal' && `is-${size}`,
+  fullWidth && 'is-fullwidth',
+  loading && 'is-loading',
+  outlined && 'is-outlined',
+  inverted && 'is-inverted',
+  rounded && 'is-rounded',
+  className,
+].filter(Boolean).join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={classes} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} disabled={disabled} {...rest}>
+      <slot />
+    </button>
+  )
+}

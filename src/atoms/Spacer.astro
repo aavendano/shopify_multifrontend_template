@@ -1,0 +1,21 @@
+---
+interface Props {
+  size?: '1' | '2' | '3' | '4' | '5' | '6';
+  axis?: 'x' | 'y' | 'both';
+  class?: string;
+}
+
+const {
+  size = '3',
+  axis = 'y',
+  class: className,
+} = Astro.props;
+
+let classes = '';
+if (axis === 'both') classes = `m-${size}`;
+if (axis === 'x') classes = `mx-${size}`;
+if (axis === 'y') classes = `my-${size}`;
+
+---
+
+<div class={`${classes} ${className}`}></div>

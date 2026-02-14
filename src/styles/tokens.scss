@@ -1,0 +1,41 @@
+// Colors
+$token-color-primary: #00d1b2 !default;
+$token-color-secondary: #363636 !default;
+$token-color-background: #ffffff !default;
+$token-color-text: #4a4a4a !default;
+$token-color-success: #48c774 !default;
+$token-color-warning: #ffdd57 !default;
+$token-color-danger: #f14668 !default;
+
+// Typography
+$token-font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
+$token-font-size-base: 16px !default;
+$token-font-weight-normal: 400 !default;
+$token-font-weight-bold: 700 !default;
+
+// Spacing Scale
+$token-spacing-xs: 0.25rem !default;
+$token-spacing-sm: 0.5rem !default;
+$token-spacing-md: 1rem !default;
+$token-spacing-lg: 1.5rem !default;
+$token-spacing-xl: 3rem !default;
+
+// Border Radius
+$token-radius-sm: 2px !default;
+$token-radius-md: 4px !default;
+$token-radius-lg: 8px !default;
+$token-radius-full: 9999px !default;
+
+// Shadows
+$token-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !default;
+$token-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !default;
+
+// Transitions
+$token-transition-base: all 0.2s ease-in-out !default;
+
+// Z-Index Scale
+$token-z-index-10: 10 !default;
+$token-z-index-20: 20 !default;
+$token-z-index-30: 30 !default;
+$token-z-index-40: 40 !default;
+$token-z-index-50: 50 !default;
