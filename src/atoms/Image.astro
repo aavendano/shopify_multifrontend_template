@@ -1,0 +1,36 @@
+---
+interface Props extends astroHTML.JSX.ImgHTMLAttributes {
+  ratio?: 'square' | '1by1' | '5by4' | '4by3' | '3by2' | '16by9' | '2by1' | '3by1' | '4by5' | '3by4' | '2by3' | '9by16' | '1by2' | '1by3';
+  fit?: 'cover' | 'contain' | 'fill' | 'scale-down';
+  src: string;
+  alt: string;
+  class?: string;
+  rounded?: boolean;
+}
+
+const {
+  ratio,
+  fit = 'cover',
+  src,
+  alt,
+  class: className,
+  rounded = false,
+  ...rest
+} = Astro.props;
+
+const wrapperClasses = [
+  'image',
+  ratio && `is-${ratio}`,
+  className
+].filter(Boolean).join(' ');
+
+const imgClasses = [
+  rounded && 'is-rounded',
+].filter(Boolean).join(' ');
+
+const style = ratio ? `object-fit: ${fit}; width: 100%; height: 100%;` : `object-fit: ${fit};`;
+---
+
+<figure class={wrapperClasses}>
+  <img src={src} alt={alt} class={imgClasses} style={style} {...rest} />
+</figure>

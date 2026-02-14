@@ -1,0 +1,38 @@
+---
+interface Props {
+  quantity: number;
+  threshold?: number;
+  class?: string;
+}
+
+const {
+  quantity,
+  threshold = 10,
+  class: className,
+} = Astro.props;
+
+let status = 'in-stock';
+let text = 'In Stock';
+let color = 'success';
+
+if (quantity === 0) {
+  status = 'out-of-stock';
+  text = 'Out of Stock';
+  color = 'danger';
+} else if (quantity < threshold) {
+  status = 'low-stock';
+  text = `Only ${quantity} left!`;
+  color = 'warning';
+}
+
+const classes = [
+  'tag',
+  `is-${color}`,
+  'is-light',
+  className
+].filter(Boolean).join(' ');
+---
+
+<span class={classes}>
+  {text}
+</span>

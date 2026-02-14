@@ -1,0 +1,28 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark' | 'link' | 'white' | 'black' | 'text' | 'ghost';
+  size?: 'normal' | 'medium' | 'large';
+  rounded?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'normal',
+  rounded = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'tag',
+  variant && `is-${variant}`,
+  size !== 'normal' && `is-${size}`,
+  rounded && 'is-rounded',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<span class={classes} {...rest}>
+  <slot />
+</span>

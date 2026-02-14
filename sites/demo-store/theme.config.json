@@ -1,0 +1,14 @@
+{
+  "siteId": "demo-store",
+  "name": "Demo Store",
+  "colors": {
+    "primary": "#00d1b2",
+    "secondary": "#363636",
+    "background": "#ffffff",
+    "text": "#4a4a4a"
+  },
+  "typography": {
+    "fontFamily": "sans-serif",
+    "baseFontSize": "16px"
+  }
+}

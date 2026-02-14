@@ -1,0 +1,15 @@
+@use "tokens" as *;
+
+// Override Bulma variables
+$primary: $token-color-primary;
+$info: $token-color-primary;
+$success: $token-color-success;
+$warning: $token-color-warning;
+$danger: $token-color-danger;
+$text: $token-color-text;
+$body-background-color: $token-color-background;
+
+$family-primary: $token-font-family;
+$size-medium: $token-font-size-base;
+
+@import "bulma/bulma";

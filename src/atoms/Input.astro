@@ -1,0 +1,28 @@
+---
+interface Props extends astroHTML.JSX.InputHTMLAttributes {
+  variant?: 'primary' | 'info' | 'success' | 'warning' | 'danger';
+  size?: 'small' | 'normal' | 'medium' | 'large';
+  rounded?: boolean;
+  error?: boolean;
+}
+
+const {
+  variant,
+  size = 'normal',
+  rounded = false,
+  error = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'input',
+  variant && `is-${variant}`,
+  size !== 'normal' && `is-${size}`,
+  rounded && 'is-rounded',
+  error && 'is-danger',
+  className
+].filter(Boolean).join(' ');
+---
+
+<input class={classes} {...rest} />

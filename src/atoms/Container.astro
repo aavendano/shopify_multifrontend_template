@@ -1,0 +1,25 @@
+---
+interface Props {
+  fluid?: boolean;
+  breakpoint?: 'widescreen' | 'fullhd';
+  class?: string;
+}
+
+const {
+  fluid,
+  breakpoint,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'container',
+  fluid && 'is-fluid',
+  breakpoint && `is-${breakpoint}`,
+  className
+].filter(Boolean).join(' ');
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>
