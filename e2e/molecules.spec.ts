@@ -16,10 +16,10 @@ test.describe('Molecules', () => {
 
     // Verify class change
     const largeBtn = page.locator('.variant-selector button:has-text("Large")');
-    await expect(largeBtn).toHaveClass(/is-primary/);
+    await expect(largeBtn).not.toHaveClass(/is-outlined/);
 
     const smallBtn = page.locator('.variant-selector button:has-text("Small")');
-    await expect(smallBtn).not.toHaveClass(/is-primary/);
+    await expect(smallBtn).toHaveClass(/is-outlined/);
   });
 
   test('QuantitySelector interaction', async ({ page }) => {
