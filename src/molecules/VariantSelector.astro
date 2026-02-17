@@ -1,0 +1,56 @@
+---
+import Label from '../atoms/Label.astro';
+import Button from '../atoms/Button.astro';
+
+interface Props {
+  options: { label: string; value: string }[];
+  selected?: string;
+  name?: string;
+  // onChange is handled via CustomEvent 'variant-change'
+}
+
+const { options, selected, name } = Astro.props;
+---
+
+<div class="variant-selector" data-selected={selected}>
+  <Label>{name || 'Variant'}</Label>
+  <div class="buttons are-small">
+    {options.map((option) => (
+      <Button
+        variant="primary"
+        class="variant-option"
+        data-value={option.value}
+        outlined={option.value !== selected}
+      >
+        {option.label}
+      </Button>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.variant-selector').forEach(selector => {
+    selector.addEventListener('click', (e) => {
+      const target = (e.target as Element).closest('.variant-option');
+      if (!target) return;
+
+      const value = target.getAttribute('data-value');
+      const label = selector.querySelector('label')?.textContent;
+
+      // Update visual state
+      selector.querySelectorAll('.variant-option').forEach(btn => {
+        if (btn === target) {
+            btn.classList.remove('is-outlined');
+        } else {
+            btn.classList.add('is-outlined');
+        }
+      });
+
+      // Emit event
+      selector.dispatchEvent(new CustomEvent('variant-change', {
+        detail: { value, name: label },
+        bubbles: true
+      }));
+    });
+  });
+</script>

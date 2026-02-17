@@ -1,0 +1,25 @@
+---
+import Label from '../atoms/Label.astro';
+import Input from '../atoms/Input.astro';
+import TextBlock from '../atoms/TextBlock.astro';
+
+interface Props extends astroHTML.JSX.InputHTMLAttributes {
+  label: string;
+  required?: boolean;
+  error?: string;
+}
+
+const { label, required, error, class: className, ...inputProps } = Astro.props;
+---
+
+<div class={`field ${className || ''}`}>
+  <Label required={required}>{label}</Label>
+  <div class="control">
+    <Input {...inputProps} error={!!error} />
+  </div>
+  {error && (
+    <TextBlock tag="p" color="danger" size="7" class="mt-1">
+      {error}
+    </TextBlock>
+  )}
+</div>

@@ -1,0 +1,126 @@
+---
+import ProductPrice from '../molecules/ProductPrice.astro';
+import ProductStockIndicator from '../molecules/ProductStockIndicator.astro';
+import CardMedia from '../molecules/CardMedia.astro';
+import CardContent from '../molecules/CardContent.astro';
+import BreadcrumbItem from '../molecules/BreadcrumbItem.astro';
+import FormField from '../molecules/FormField.astro';
+import VariantSelector from '../molecules/VariantSelector.astro';
+import QuantitySelector from '../molecules/QuantitySelector.astro';
+
+import '../styles/main.scss';
+---
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Molecules Test</title>
+</head>
+<body>
+    <div class="container p-5">
+        <h1 class="title">Molecules Test Page</h1>
+
+        <section class="section">
+            <h2 class="subtitle">ProductPrice</h2>
+            <div class="box">
+                <p>Standard: <ProductPrice price={100} currency="USD" /></p>
+                <p>Sale: <ProductPrice price={80} compareAtPrice={100} currency="USD" showSavings={true} /></p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="subtitle">ProductStockIndicator</h2>
+            <div class="box">
+                <p>In Stock: <ProductStockIndicator quantity={50} /></p>
+                <p>Low Stock: <ProductStockIndicator quantity={5} lowStockThreshold={10} /></p>
+                <p>Out of Stock: <ProductStockIndicator quantity={0} /></p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="subtitle">CardMedia</h2>
+            <div class="box" style="max-width: 300px;">
+                <CardMedia src="https://via.placeholder.com/300" alt="Test Image" badgeText="New" aspectRatio="square" />
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="subtitle">CardContent</h2>
+            <div class="box" style="max-width: 300px;">
+                <CardContent
+                    title="Test Product"
+                    subtitle="Awesome product"
+                    price={99.99}
+                    compareAtPrice={129.99}
+                    currency="USD"
+                    quantity={3}
+                    lowStockThreshold={5}
+                />
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="subtitle">BreadcrumbItem</h2>
+            <div class="box">
+                <nav class="breadcrumb">
+                    <ul>
+                        <BreadcrumbItem label="Home" href="/" />
+                        <BreadcrumbItem label="Category" href="/category" />
+                        <BreadcrumbItem label="Product" href="#" isActive={true} />
+                    </ul>
+                </nav>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="subtitle">FormField</h2>
+            <div class="box" style="max-width: 400px;">
+                <FormField label="Username" placeholder="Enter username" required />
+                <FormField label="Email" type="email" placeholder="Enter email" error="Invalid email" />
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="subtitle">VariantSelector</h2>
+            <div class="box">
+                <div id="variant-output" class="mb-2">Selected: m (undefined)</div>
+                <VariantSelector
+                    options={[
+                        { label: 'Small', value: 's' },
+                        { label: 'Medium', value: 'm' },
+                        { label: 'Large', value: 'l' }
+                    ]}
+                    selected="m"
+                />
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="subtitle">QuantitySelector</h2>
+            <div class="box">
+                <div id="quantity-output" class="mb-2">Quantity: 1</div>
+                <QuantitySelector value={1} min={1} max={10} />
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        document.addEventListener('variant-change', (e) => {
+            const detail = (e as CustomEvent).detail;
+            const output = document.getElementById('variant-output');
+            // detail.name might be undefined if not passed to VariantSelector props "name"
+            if (output) output.textContent = `Selected: ${detail.value} (${detail.name || 'Variant'})`;
+            console.log('Variant Change:', detail);
+        });
+
+        document.addEventListener('quantity-change', (e) => {
+            const detail = (e as CustomEvent).detail;
+            const output = document.getElementById('quantity-output');
+            if (output) output.textContent = `Quantity: ${detail.value}`;
+            console.log('Quantity Change:', detail);
+        });
+    </script>
+</body>
+</html>

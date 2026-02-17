@@ -1,0 +1,37 @@
+---
+import Image from '../atoms/Image.astro';
+import Badge from '../atoms/Badge.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  badgeText?: string;
+  aspectRatio?: 'square' | '1by1' | '5by4' | '4by3' | '3by2' | '16by9' | '2by1' | '3by1' | '4by5' | '3by4' | '2by3' | '9by16' | '1by2' | '1by3';
+}
+
+const { src, alt, badgeText, aspectRatio } = Astro.props;
+---
+
+<div class="card-media">
+  <Image src={src} alt={alt} ratio={aspectRatio} />
+  {badgeText && (
+    <div class="badge-overlay">
+      <Badge variant="info">{badgeText}</Badge>
+    </div>
+  )}
+</div>
+
+<style lang="scss">
+@use '../styles/tokens' as *;
+
+.card-media {
+  position: relative;
+
+  .badge-overlay {
+    position: absolute;
+    top: $token-spacing-sm;
+    left: $token-spacing-sm;
+    z-index: $token-z-index-10;
+  }
+}
+</style>

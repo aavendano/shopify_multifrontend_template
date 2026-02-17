@@ -1,0 +1,14 @@
+---
+import StockLabel from '../atoms/StockLabel.astro';
+
+interface Props {
+  quantity: number;
+  lowStockThreshold?: number;
+}
+
+const { quantity, lowStockThreshold } = Astro.props;
+---
+
+<div class="product-stock-indicator">
+  <StockLabel quantity={quantity} threshold={lowStockThreshold} />
+</div>

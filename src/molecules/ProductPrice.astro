@@ -1,0 +1,36 @@
+---
+import PriceLabel from '../atoms/PriceLabel.astro';
+import Badge from '../atoms/Badge.astro';
+
+interface Props {
+  price: number | string;
+  compareAtPrice?: number | string;
+  currency?: string;
+  showSavings?: boolean;
+}
+
+const {
+  price,
+  compareAtPrice,
+  currency,
+  showSavings = false,
+} = Astro.props;
+
+let savings = 0;
+if (showSavings && compareAtPrice) {
+  const p = Number(price);
+  const c = Number(compareAtPrice);
+  if (!isNaN(p) && !isNaN(c) && c > p) {
+    savings = Math.round(((c - p) / c) * 100);
+  }
+}
+---
+
+<div class="product-price is-flex is-align-items-center">
+  <PriceLabel price={price} compareAtPrice={compareAtPrice} currency={currency} />
+  {savings > 0 && (
+    <Badge variant="danger" class="ml-2">
+      {savings}% OFF
+    </Badge>
+  )}
+</div>
