@@ -1,0 +1,80 @@
+---
+import Button from '../atoms/Button.astro';
+import Input from '../atoms/Input.astro';
+
+interface Props {
+  value?: number;
+  min?: number;
+  max?: number;
+}
+
+const { value = 1, min = 1, max = 99 } = Astro.props;
+---
+
+<div class="quantity-selector field has-addons" data-min={min} data-max={max} data-value={value}>
+  <div class="control">
+    <Button class="decrement-btn" disabled={value <= min}>-</Button>
+  </div>
+  <div class="control">
+    <Input
+      type="number"
+      value={value}
+      min={min}
+      max={max}
+      class="quantity-input has-text-centered"
+      readonly
+    />
+  </div>
+  <div class="control">
+    <Button class="increment-btn" disabled={value >= max}>+</Button>
+  </div>
+</div>
+
+<style>
+  .quantity-input {
+    width: 4rem;
+    text-align: center;
+    /* remove spin buttons */
+    -moz-appearance: textfield;
+  }
+  .quantity-input::-webkit-outer-spin-button,
+  .quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.quantity-selector').forEach(selector => {
+    const input = selector.querySelector('input');
+    const decBtn = selector.querySelector('.decrement-btn');
+    const incBtn = selector.querySelector('.increment-btn');
+
+    if (!input || !decBtn || !incBtn) return;
+
+    const min = parseInt(selector.getAttribute('data-min') || '1');
+    const max = parseInt(selector.getAttribute('data-max') || '99');
+
+    const update = (newValue) => {
+      if (newValue < min || newValue > max) return;
+
+      input.value = newValue.toString();
+
+      decBtn.toggleAttribute('disabled', newValue <= min);
+      incBtn.toggleAttribute('disabled', newValue >= max);
+
+      selector.dispatchEvent(new CustomEvent('quantity-change', {
+        detail: { value: newValue },
+        bubbles: true
+      }));
+    };
+
+    decBtn.addEventListener('click', () => {
+      update(parseInt(input.value) - 1);
+    });
+
+    incBtn.addEventListener('click', () => {
+      update(parseInt(input.value) + 1);
+    });
+  });
+</script>
