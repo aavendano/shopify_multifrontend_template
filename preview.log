@@ -1,0 +1,11 @@
+
+> app@0.0.1 preview /app
+> astro preview
+
+Port 4321 is in use, trying another one...
+Port 4322 is in use, trying another one...
+
+ astro  v5.17.2 ready in 23 ms
+
+┃ Local    http://localhost:4323/
+┃ Network  use --host to expose

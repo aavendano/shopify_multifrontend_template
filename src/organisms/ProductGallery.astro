@@ -1,0 +1,83 @@
+---
+import Image from '../atoms/Image.astro';
+
+interface Props {
+  images: string[];
+  selectedImage?: string;
+  class?: string;
+}
+
+const { images, selectedImage, class: className } = Astro.props;
+
+const currentImage = selectedImage || images[0];
+---
+
+<div class={`product-gallery ${className || ''}`}>
+  <div class="main-image mb-4">
+    <Image
+      src={currentImage}
+      alt="Product Image"
+      ratio="square"
+      class="border rounded"
+    />
+  </div>
+
+  <div class="thumbnails is-flex is-flex-wrap-wrap m-neg-1">
+    {images.map((img, index) => (
+      <button
+        type="button"
+        class={`thumbnail-btn p-1 border-0 bg-transparent ${img === currentImage ? 'is-active' : ''}`}
+        data-src={img}
+        data-index={index}
+        aria-label={`View image ${index + 1}`}
+      >
+        <Image
+          src={img}
+          alt={`Thumbnail ${index + 1}`}
+          ratio="square"
+          width={80}
+          height={80}
+          class="rounded border"
+        />
+      </button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .m-neg-1 {
+    margin: -0.25rem;
+  }
+  .thumbnail-btn {
+    width: 20%;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .thumbnail-btn:hover {
+    transform: scale(1.05);
+  }
+  .thumbnail-btn.is-active img {
+    border-color: var(--bulma-primary);
+    border-width: 2px;
+  }
+</style>
+
+<script>
+  const gallery = document.querySelector('.product-gallery');
+  if (gallery) {
+    gallery.querySelectorAll('.thumbnail-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const src = btn.getAttribute('data-src');
+
+        // Optimistic update (optional, but good UX)
+        // Actually, organisms shouldn't manage state, but they can update their view if they are self-contained or rely on parent re-render.
+        // But here we emit event.
+
+        gallery.dispatchEvent(new CustomEvent('image-change', {
+          detail: { src },
+          bubbles: true
+        }));
+      });
+    });
+  }
+</script>

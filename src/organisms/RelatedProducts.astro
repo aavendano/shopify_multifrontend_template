@@ -1,0 +1,33 @@
+---
+import ProductGrid from './ProductGrid.astro';
+import TextBlock from '../atoms/TextBlock.astro';
+import Container from '../atoms/Container.astro';
+
+interface Product {
+  id: string;
+  title: string;
+  image: string;
+  price: number | string;
+  compareAtPrice?: number | string;
+  currency?: string;
+  badgeText?: string;
+  href: string;
+  stock?: number;
+}
+
+interface Props {
+  products: Product[];
+  title?: string;
+}
+
+const { products, title = 'You might also like' } = Astro.props;
+---
+
+<section class="related-products section">
+  <Container>
+    <TextBlock tag="h2" size="3" weight="bold" align="centered" class="mb-6">
+      {title}
+    </TextBlock>
+    <ProductGrid products={products} columns={4} />
+  </Container>
+</section>

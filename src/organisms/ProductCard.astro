@@ -1,0 +1,114 @@
+---
+import CardMedia from '../molecules/CardMedia.astro';
+import CardContent from '../molecules/CardContent.astro';
+import Button from '../atoms/Button.astro';
+
+interface Props {
+  productId: string;
+  title: string;
+  image: string;
+  price: number | string;
+  compareAtPrice?: number | string;
+  currency?: string;
+  badgeText?: string;
+  href: string;
+  quantity?: number;
+  lowStockThreshold?: number;
+  showQuickAdd?: boolean;
+}
+
+const {
+  productId,
+  title,
+  image,
+  price,
+  compareAtPrice,
+  currency,
+  badgeText,
+  href,
+  quantity,
+  lowStockThreshold,
+  showQuickAdd = false,
+} = Astro.props;
+---
+
+<div class="product-card card is-hoverable h-100" data-product-id={productId}>
+  <a href={href} class="card-image-link">
+    <CardMedia
+      src={image}
+      alt={title}
+      badgeText={badgeText}
+      aspectRatio="square"
+    />
+  </a>
+
+  <div class="card-content-wrapper p-4">
+    <a href={href} class="has-text-black">
+      <CardContent
+        title={title}
+        price={price}
+        compareAtPrice={compareAtPrice}
+        currency={currency}
+        quantity={quantity}
+        lowStockThreshold={lowStockThreshold}
+      />
+    </a>
+
+    {showQuickAdd && (
+      <div class="mt-4">
+        <Button
+          variant="primary"
+          fullWidth={true}
+          class="quick-add-btn"
+        >
+          Add to Cart
+        </Button>
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  .product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .card-image-link {
+    display: block;
+    overflow: hidden;
+  }
+
+  .card-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.product-card').forEach(card => {
+    const btn = card.querySelector('.quick-add-btn');
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const productId = card.getAttribute('data-product-id');
+
+        card.dispatchEvent(new CustomEvent('add-to-cart', {
+          detail: { productId },
+          bubbles: true
+        }));
+      });
+    }
+  });
+</script>

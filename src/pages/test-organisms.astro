@@ -1,0 +1,208 @@
+---
+import ProductCard from '../organisms/ProductCard.astro';
+import ProductGrid from '../organisms/ProductGrid.astro';
+import FiltersPanel from '../organisms/FiltersPanel.astro';
+import Header from '../organisms/Header.astro';
+import Footer from '../organisms/Footer.astro';
+import ProductGallery from '../organisms/ProductGallery.astro';
+import ProductDetails from '../organisms/ProductDetails.astro';
+import CartDrawer from '../organisms/CartDrawer.astro';
+import RelatedProducts from '../organisms/RelatedProducts.astro';
+
+import '../styles/main.scss';
+
+const products = [
+    {
+        id: '1',
+        title: 'Product 1',
+        image: 'https://via.placeholder.com/300',
+        price: 99.99,
+        href: '#',
+        stock: 5
+    },
+    {
+        id: '2',
+        title: 'Product 2',
+        image: 'https://via.placeholder.com/300',
+        price: 149.99,
+        compareAtPrice: 199.99,
+        badgeText: 'Sale',
+        href: '#',
+        stock: 0
+    },
+    {
+        id: '3',
+        title: 'Product 3',
+        image: 'https://via.placeholder.com/300',
+        price: 49.99,
+        href: '#',
+        stock: 10
+    },
+    {
+        id: '4',
+        title: 'Product 4',
+        image: 'https://via.placeholder.com/300',
+        price: 299.99,
+        href: '#',
+        stock: 2
+    }
+];
+
+const filters = [
+    { id: 'search', label: 'Search', type: 'text' },
+    { id: 'price', label: 'Price Range', type: 'range', min: 0, max: 1000 },
+    {
+        id: 'category',
+        label: 'Category',
+        type: 'checkbox',
+        options: [
+            { label: 'Electronics', value: 'electronics' },
+            { label: 'Clothing', value: 'clothing' }
+        ]
+    }
+];
+
+const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Shop', href: '/shop' },
+    { label: 'About', href: '/about' }
+];
+
+const footerLinks = [
+    {
+        title: 'Company',
+        items: [
+            { label: 'About Us', href: '#' },
+            { label: 'Careers', href: '#' }
+        ]
+    },
+    {
+        title: 'Support',
+        items: [
+            { label: 'FAQ', href: '#' },
+            { label: 'Contact', href: '#' }
+        ]
+    }
+];
+
+const productDetails = {
+    id: 'p1',
+    title: 'Super Widget',
+    description: 'The best widget ever made.',
+    price: 199.99,
+    compareAtPrice: 249.99,
+    variants: [
+        { id: 'v1', title: 'Small', price: 199.99, stock: 10 },
+        { id: 'v2', title: 'Medium', price: 219.99, stock: 5 },
+        { id: 'v3', title: 'Large', price: 239.99, stock: 0 }
+    ]
+};
+
+const cartItems = [
+    {
+        id: 'c1',
+        productId: '1',
+        title: 'Product 1',
+        image: 'https://via.placeholder.com/80',
+        price: 99.99,
+        quantity: 2
+    }
+];
+---
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Organisms Test</title>
+</head>
+<body class="has-navbar-fixed-top">
+    <Header logo="MyStore" navItems={navItems} cartCount={2} />
+
+    <div class="section">
+        <div class="container">
+            <h2 class="title is-4">ProductDetails</h2>
+            <ProductDetails product={productDetails} />
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="title is-4">ProductGallery</h2>
+            <div style="max-width: 500px;">
+                <ProductGallery images={['https://via.placeholder.com/500', 'https://via.placeholder.com/500/000000/ffffff', 'https://via.placeholder.com/500/ff0000/ffffff']} />
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="title is-4">ProductGrid & Card</h2>
+            <ProductGrid products={products} columns={4} />
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="title is-4">FiltersPanel</h2>
+            <div class="columns">
+                <div class="column is-one-quarter">
+                    <FiltersPanel filters={filters} selectedFilters={{}} />
+                </div>
+                <div class="column">
+                    <p>Filter results here...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2 class="title is-4">CartDrawer (Click Cart Icon in Header to Open)</h2>
+            <CartDrawer isOpen={false} items={cartItems} subtotal={199.98} />
+        </div>
+    </div>
+
+    <RelatedProducts products={products.slice(0, 3)} />
+
+    <div id="event-log" style="position: fixed; bottom: 0; right: 0; background: rgba(0,0,0,0.8); color: white; padding: 10px; max-height: 200px; overflow: auto; z-index: 1000; width: 300px;">
+        Logs will appear here...
+    </div>
+
+    <Footer links={footerLinks} copyright="© 2023 MyStore. All rights reserved." />
+
+    <script>
+        const logEl = document.getElementById('event-log');
+        const log = (msg) => {
+            if (logEl) {
+                const div = document.createElement('div');
+                div.textContent = msg;
+                logEl.prepend(div);
+            }
+            console.log(msg);
+        };
+
+        // Event logging
+        document.body.addEventListener('add-to-cart', (e) => log(`Event: add-to-cart ${JSON.stringify((e as CustomEvent).detail)}`));
+        document.body.addEventListener('variant-change', (e) => log(`Event: variant-change ${JSON.stringify((e as CustomEvent).detail)}`));
+        document.body.addEventListener('filter-change', (e) => log(`Event: filter-change ${JSON.stringify((e as CustomEvent).detail)}`));
+        document.body.addEventListener('image-change', (e) => log(`Event: image-change ${JSON.stringify((e as CustomEvent).detail)}`));
+        document.body.addEventListener('menu-toggle', () => log('Event: menu-toggle'));
+
+        document.body.addEventListener('cart-open', () => {
+            log('Event: cart-open');
+            const drawer = document.querySelector('.cart-drawer-overlay');
+            if (drawer) drawer.classList.add('is-active');
+        });
+
+        document.body.addEventListener('close', () => {
+            log('Event: close (cart)');
+            const drawer = document.querySelector('.cart-drawer-overlay');
+            if (drawer) drawer.classList.remove('is-active');
+        });
+
+        document.body.addEventListener('remove-item', (e) => log(`Event: remove-item ${JSON.stringify((e as CustomEvent).detail)}`));
+        document.body.addEventListener('checkout', () => log('Event: checkout'));
+    </script>
+</body>
+</html>

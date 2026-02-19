@@ -1,0 +1,182 @@
+---
+import Container from '../atoms/Container.astro';
+import TextBlock from '../atoms/TextBlock.astro';
+import Button from '../atoms/Button.astro';
+import Image from '../atoms/Image.astro';
+import Icon from '../atoms/Icon.astro';
+
+interface CartItem {
+  id: string;
+  productId: string;
+  title: string;
+  variantTitle?: string;
+  image: string;
+  price: number | string;
+  quantity: number;
+}
+
+interface Props {
+  isOpen: boolean;
+  items: CartItem[];
+  subtotal: number | string;
+  currency?: string;
+}
+
+const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
+---
+
+<div class={`cart-drawer-overlay ${isOpen ? 'is-active' : ''}`}>
+  <div class="cart-drawer has-background-white">
+    <div class="cart-header is-flex is-justify-content-space-between is-align-items-center p-4 border-bottom">
+      <TextBlock tag="h2" size="4" weight="bold">Your Cart</TextBlock>
+      <Button variant="ghost" class="close-btn" aria-label="Close cart">
+        <Icon name="close" size="medium" />
+      </Button>
+    </div>
+
+    <div class="cart-items p-4">
+      {items.length === 0 ? (
+        <TextBlock tag="p" class="has-text-centered has-text-grey py-6">
+          Your cart is empty.
+        </TextBlock>
+      ) : (
+        items.map((item) => (
+          <div class="cart-item is-flex mb-4 pb-4 border-bottom">
+            <div class="cart-item-image mr-3" style="width: 80px;">
+              <Image src={item.image} alt={item.title} ratio="square" class="rounded" />
+            </div>
+            <div class="cart-item-details is-flex-grow-1">
+              <div class="is-flex is-justify-content-space-between mb-1">
+                <TextBlock tag="h3" size="6" weight="bold">{item.title}</TextBlock>
+                <Button
+                  variant="ghost"
+                  size="small"
+                  class="remove-item-btn p-0 has-text-danger"
+                  data-id={item.id}
+                  aria-label="Remove item"
+                >
+                  <Icon name="close" size="small" />
+                </Button>
+              </div>
+              {item.variantTitle && (
+                <TextBlock tag="p" size="7" color="grey" class="mb-1">{item.variantTitle}</TextBlock>
+              )}
+              <div class="is-flex is-justify-content-space-between is-align-items-center mt-2">
+                <TextBlock tag="span" size="7">Qty: {item.quantity}</TextBlock>
+                <TextBlock tag="span" weight="bold">
+                  {new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(Number(item.price) * item.quantity)}
+                </TextBlock>
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+
+    <div class="cart-footer p-4 border-top">
+      <div class="is-flex is-justify-content-space-between mb-4">
+        <TextBlock tag="span" weight="bold">Subtotal</TextBlock>
+        <TextBlock tag="span" weight="bold" size="4">
+          {new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(Number(subtotal))}
+        </TextBlock>
+      </div>
+      <Button
+        variant="primary"
+        fullWidth={true}
+        size="large"
+        class="checkout-btn"
+        disabled={items.length === 0}
+      >
+        Checkout
+      </Button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cart-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40; /* $token-z-index-40 */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .cart-drawer-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cart-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer-overlay.is-active .cart-drawer {
+    transform: translateX(0);
+  }
+
+  .cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid #dbdbdb;
+  }
+  .border-top {
+    border-top: 1px solid #dbdbdb;
+  }
+</style>
+
+<script>
+  const overlay = document.querySelector('.cart-drawer-overlay');
+
+  if (overlay) {
+    // Close events
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+      }
+    });
+
+    const closeBtn = overlay.querySelector('.close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        overlay.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+      });
+    }
+
+    // Remove item events
+    overlay.querySelectorAll('.remove-item-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = btn.getAttribute('data-id');
+        overlay.dispatchEvent(new CustomEvent('remove-item', {
+          detail: { id },
+          bubbles: true
+        }));
+      });
+    });
+
+    // Checkout event
+    const checkoutBtn = overlay.querySelector('.checkout-btn');
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener('click', () => {
+        overlay.dispatchEvent(new CustomEvent('checkout', { bubbles: true }));
+      });
+    }
+  }
+</script>
