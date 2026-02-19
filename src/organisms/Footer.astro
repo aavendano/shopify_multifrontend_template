@@ -1,0 +1,56 @@
+---
+import Container from '../atoms/Container.astro';
+import TextBlock from '../atoms/TextBlock.astro';
+
+interface LinkItem {
+  label: string;
+  href: string;
+}
+
+interface LinkGroup {
+  title: string;
+  items: LinkItem[];
+}
+
+interface Props {
+  links: LinkGroup[];
+  copyright: string;
+}
+
+const { links, copyright } = Astro.props;
+---
+
+<footer class="footer has-background-light py-6">
+  <Container>
+    <div class="columns is-multiline">
+      {links.map((group) => (
+        <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile">
+          <TextBlock tag="h4" size="5" weight="semibold" class="mb-4 text-primary">
+            {group.title}
+          </TextBlock>
+          <ul>
+            {group.items.map((item) => (
+              <li class="mb-2">
+                <a href={item.href} class="has-text-grey-dark">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-6 pt-5 border-top has-text-centered">
+      <TextBlock tag="p" size="7" color="grey">
+        {copyright}
+      </TextBlock>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .border-top {
+    border-top: 1px solid #dbdbdb;
+  }
+</style>

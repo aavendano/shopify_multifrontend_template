@@ -1,0 +1,148 @@
+---
+import FormField from '../molecules/FormField.astro';
+import Button from '../atoms/Button.astro';
+import Label from '../atoms/Label.astro';
+
+interface FilterOption {
+  label: string;
+  value: string;
+}
+
+interface Filter {
+  id: string;
+  label: string;
+  type: 'text' | 'range' | 'checkbox' | 'radio';
+  options?: FilterOption[];
+  min?: number;
+  max?: number;
+}
+
+interface Props {
+  filters: Filter[];
+  selectedFilters: Record<string, any>;
+}
+
+const { filters, selectedFilters } = Astro.props;
+---
+
+<div class="filters-panel box">
+  <form id="filters-form">
+    {filters.map((filter) => (
+      <div class="filter-group mb-5">
+        <h4 class="title is-6 mb-3">{filter.label}</h4>
+
+        {filter.type === 'text' && (
+          <FormField
+            label={filter.label}
+            name={filter.id}
+            value={selectedFilters[filter.id] || ''}
+            placeholder={`Search ${filter.label}...`}
+            type="text"
+            class="mb-2"
+          />
+        )}
+
+        {filter.type === 'range' && (
+          <div class="is-flex is-align-items-center">
+            <FormField
+              label="Min"
+              name={`${filter.id}_min`}
+              type="number"
+              min={filter.min}
+              max={filter.max}
+              value={selectedFilters[`${filter.id}_min`] || ''}
+              class="mr-2"
+            />
+            <span class="mx-2">-</span>
+            <FormField
+              label="Max"
+              name={`${filter.id}_max`}
+              type="number"
+              min={filter.min}
+              max={filter.max}
+              value={selectedFilters[`${filter.id}_max`] || ''}
+              class="ml-2"
+            />
+          </div>
+        )}
+
+        {filter.type === 'checkbox' && filter.options && (
+          <div class="filter-options">
+            {filter.options.map((option) => (
+              <label class="checkbox is-block mb-1">
+                <input
+                  type="checkbox"
+                  name={filter.id}
+                  value={option.value}
+                  checked={Array.isArray(selectedFilters[filter.id]) && selectedFilters[filter.id].includes(option.value)}
+                  class="mr-2"
+                />
+                {option.label}
+              </label>
+            ))}
+          </div>
+        )}
+
+        {filter.type === 'radio' && filter.options && (
+          <div class="filter-options">
+            {filter.options.map((option) => (
+              <label class="radio is-block mb-1">
+                <input
+                  type="radio"
+                  name={filter.id}
+                  value={option.value}
+                  checked={selectedFilters[filter.id] === option.value}
+                  class="mr-2"
+                />
+                {option.label}
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+
+    <div class="buttons is-right mt-5">
+      <Button type="button" variant="white" class="clear-filters-btn">Clear All</Button>
+      <Button type="submit" variant="primary">Apply Filters</Button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('filters-form') as HTMLFormElement;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const data: Record<string, any> = {};
+
+      for (const [key, value] of formData.entries()) {
+        if (data[key]) {
+          if (!Array.isArray(data[key])) {
+            data[key] = [data[key]];
+          }
+          data[key].push(value);
+        } else {
+          data[key] = value;
+        }
+      }
+
+      form.dispatchEvent(new CustomEvent('filter-change', {
+        detail: data,
+        bubbles: true
+      }));
+    });
+
+    const clearBtn = form.querySelector('.clear-filters-btn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        form.reset();
+        form.dispatchEvent(new CustomEvent('filter-change', {
+          detail: {},
+          bubbles: true
+        }));
+      });
+    }
+  }
+</script>

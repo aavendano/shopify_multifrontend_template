@@ -1,0 +1,29 @@
+---
+import Label from '../atoms/Label.astro';
+import Input from '../atoms/Input.astro';
+import TextBlock from '../atoms/TextBlock.astro';
+
+interface Props extends astroHTML.JSX.InputHTMLAttributes {
+  label: string;
+  required?: boolean;
+  error?: string;
+  id?: string;
+}
+
+const { label, required, error, class: className, id, ...inputProps } = Astro.props;
+
+// Use provided ID or generate a random one for accessibility association
+const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class={`field ${className || ''}`}>
+  <Label for={inputId} required={required}>{label}</Label>
+  <div class="control">
+    <Input id={inputId} {...inputProps} error={!!error} />
+  </div>
+  {error && (
+    <TextBlock tag="p" color="danger" size="7" class="mt-1">
+      {error}
+    </TextBlock>
+  )}
+</div>

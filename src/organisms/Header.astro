@@ -1,0 +1,105 @@
+---
+import Container from '../atoms/Container.astro';
+import TextBlock from '../atoms/TextBlock.astro';
+import Icon from '../atoms/Icon.astro';
+import Button from '../atoms/Button.astro';
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  logo: string;
+  navItems: NavItem[];
+  cartCount?: number;
+}
+
+const { logo, navItems, cartCount = 0 } = Astro.props;
+---
+
+<header class="header is-white border-bottom">
+  <Container class="is-flex is-justify-content-space-between is-align-items-center py-4">
+    <div class="is-flex is-align-items-center">
+      <Button
+        variant="ghost"
+        class="menu-toggle-btn is-hidden-desktop mr-3"
+        aria-label="Toggle menu"
+      >
+        <Icon name="menu" size="medium" />
+      </Button>
+
+      <a href="/" class="has-text-black">
+        <TextBlock tag="h1" size="4" weight="bold">{logo}</TextBlock>
+      </a>
+    </div>
+
+    <nav class="navbar is-hidden-touch">
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          {navItems.map((item) => (
+            <a href={item.href} class="navbar-item px-4 has-text-grey-darker has-text-weight-medium">
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <div class="is-flex is-align-items-center">
+      <Button
+        variant="ghost"
+        class="cart-toggle-btn p-2"
+        aria-label="Open cart"
+      >
+        <div class="is-relative">
+          <Icon name="cart" size="medium" />
+          {cartCount > 0 && (
+            <span class="tag is-danger is-rounded is-small cart-badge">
+              {cartCount}
+            </span>
+          )}
+        </div>
+      </Button>
+    </div>
+  </Container>
+</header>
+
+<style>
+  .border-bottom {
+    border-bottom: 1px solid #dbdbdb;
+  }
+  .cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    height: 1.25rem;
+    min-width: 1.25rem;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+  }
+</style>
+
+<script>
+  const header = document.querySelector('.header');
+  if (header) {
+    const menuBtn = header.querySelector('.menu-toggle-btn');
+    const cartBtn = header.querySelector('.cart-toggle-btn');
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        header.dispatchEvent(new CustomEvent('menu-toggle', {
+          bubbles: true
+        }));
+      });
+    }
+
+    if (cartBtn) {
+      cartBtn.addEventListener('click', () => {
+        header.dispatchEvent(new CustomEvent('cart-open', {
+          bubbles: true
+        }));
+      });
+    }
+  }
+</script>
