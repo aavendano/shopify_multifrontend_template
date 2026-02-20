@@ -10,11 +10,18 @@ describe('ProductDetails', () => {
         title: 'Product Title',
         description: 'Desc',
         price: 100,
+        currency: 'USD',
         variants: [{ id: 'v1', title: 'Default', price: 100, stock: 10 }]
     };
 
     const result = await container.renderToString(ProductDetails, {
-      props: { product }
+      props: {
+          product,
+          currentPrice: 100,
+          currentStock: 10,
+          variantOptions: [{ label: 'Default', value: 'v1' }],
+          selectedVariant: product.variants[0]
+      }
     });
     expect(result).toContain('Product Title');
     expect(result).toContain('$100.00');
@@ -33,7 +40,13 @@ describe('ProductDetails', () => {
     };
 
     const result = await container.renderToString(ProductDetails, {
-      props: { product }
+      props: {
+          product,
+          currentPrice: 100,
+          currentStock: 0,
+          variantOptions: [{ label: 'Default', value: 'v1' }],
+          selectedVariant: product.variants[0]
+      }
     });
     expect(result).toContain('Out of Stock');
     expect(result).toContain('disabled');

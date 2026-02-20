@@ -23,7 +23,8 @@ describe('Header', () => {
       props: {
         logo: 'MyStore',
         navItems: [],
-        cartCount: 3
+        cartCount: 3,
+        showCartBadge: true
       }
     });
 

@@ -1,5 +1,4 @@
 ---
-import Container from '../atoms/Container.astro';
 import TextBlock from '../atoms/TextBlock.astro';
 import Button from '../atoms/Button.astro';
 import Image from '../atoms/Image.astro';
@@ -11,18 +10,17 @@ interface CartItem {
   title: string;
   variantTitle?: string;
   image: string;
-  price: number | string;
+  formattedPrice: string;
   quantity: number;
 }
 
 interface Props {
   isOpen: boolean;
   items: CartItem[];
-  subtotal: number | string;
-  currency?: string;
+  formattedSubtotal: string;
 }
 
-const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
+const { isOpen, items, formattedSubtotal } = Astro.props;
 ---
 
 <div class={`cart-drawer-overlay ${isOpen ? 'is-active' : ''}`}>
@@ -64,7 +62,7 @@ const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
               <div class="is-flex is-justify-content-space-between is-align-items-center mt-2">
                 <TextBlock tag="span" size="7">Qty: {item.quantity}</TextBlock>
                 <TextBlock tag="span" weight="bold">
-                  {new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(Number(item.price) * item.quantity)}
+                  {item.formattedPrice}
                 </TextBlock>
               </div>
             </div>
@@ -77,7 +75,7 @@ const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
       <div class="is-flex is-justify-content-space-between mb-4">
         <TextBlock tag="span" weight="bold">Subtotal</TextBlock>
         <TextBlock tag="span" weight="bold" size="4">
-          {new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(Number(subtotal))}
+          {formattedSubtotal}
         </TextBlock>
       </div>
       <Button
@@ -93,18 +91,20 @@ const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
   </div>
 </div>
 
-<style>
+<style lang="scss">
+  @use "../styles/tokens" as *;
+
   .cart-drawer-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 40; /* $token-z-index-40 */
+    background: $token-color-overlay;
+    z-index: $token-z-index-40;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: $token-transition-slow;
   }
 
   .cart-drawer-overlay.is-active {
@@ -120,7 +120,7 @@ const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
     max-width: 400px;
     height: 100%;
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: $token-transition-slow;
     display: flex;
     flex-direction: column;
   }
@@ -135,10 +135,10 @@ const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
   }
 
   .border-bottom {
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid $token-color-border;
   }
   .border-top {
-    border-top: 1px solid #dbdbdb;
+    border-top: 1px solid $token-color-border;
   }
 </style>
 
@@ -149,20 +149,26 @@ const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
     // Close events
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
-        overlay.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+        overlay.dispatchEvent(new CustomEvent('close', {
+          bubbles: true,
+          detail: {}
+        }));
       }
     });
 
     const closeBtn = overlay.querySelector('.close-btn');
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
-        overlay.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+        overlay.dispatchEvent(new CustomEvent('close', {
+          bubbles: true,
+          detail: {}
+        }));
       });
     }
 
     // Remove item events
     overlay.querySelectorAll('.remove-item-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
         overlay.dispatchEvent(new CustomEvent('remove-item', {
           detail: { id },
@@ -175,7 +181,10 @@ const { isOpen, items, subtotal, currency = 'USD' } = Astro.props;
     const checkoutBtn = overlay.querySelector('.checkout-btn');
     if (checkoutBtn) {
       checkoutBtn.addEventListener('click', () => {
-        overlay.dispatchEvent(new CustomEvent('checkout', { bubbles: true }));
+        overlay.dispatchEvent(new CustomEvent('checkout', {
+          bubbles: true,
+          detail: {}
+        }));
       });
     }
   }

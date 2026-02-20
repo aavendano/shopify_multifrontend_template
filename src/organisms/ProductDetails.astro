@@ -24,23 +24,30 @@ interface Product {
   variants: Variant[];
 }
 
+interface VariantOption {
+    label: string;
+    value: string;
+}
+
 interface Props {
   product: Product;
-  selectedVariantId?: string;
+  selectedVariant?: Variant;
+  currentPrice: number | string;
+  currentComparePrice?: number | string;
+  currentStock: number;
+  variantOptions: VariantOption[];
   quantity?: number;
 }
 
-const { product, selectedVariantId, quantity = 1 } = Astro.props;
-
-const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0];
-const currentPrice = selectedVariant?.price || product.price;
-const currentComparePrice = selectedVariant?.compareAtPrice || product.compareAtPrice;
-const currentStock = selectedVariant?.stock || 0;
-
-const variantOptions = product.variants.map(v => ({
-  label: v.title,
-  value: v.id
-}));
+const {
+    product,
+    selectedVariant,
+    currentPrice,
+    currentComparePrice,
+    currentStock,
+    variantOptions,
+    quantity = 1
+} = Astro.props;
 ---
 
 <div class="product-details box p-5">
@@ -52,7 +59,6 @@ const variantOptions = product.variants.map(v => ({
       compareAtPrice={currentComparePrice}
       currency={product.currency}
       showSavings={true}
-      size="large"
     />
   </div>
 
@@ -96,23 +102,8 @@ const variantOptions = product.variants.map(v => ({
   document.querySelectorAll('.product-form').forEach(form => {
     // Forward variant change
     form.addEventListener('variant-change', (e) => {
-      e.stopPropagation(); // Stop bubbling from molecule, re-emit from organism?
-      // Actually, standard says "Molecules emit events. Organisms will consume them later."
-      // But here organism is a composition. It should probably re-emit or just let it bubble?
-      // Requirement: "Emit 'variant-change'".
-      // If molecule emits it and it bubbles, the organism technically emits it (via bubble).
-      // But if I want to transform it or ensure standard payload...
-      // Molecule VariantSelector emits { value: string, name: string }.
-      // Organism ProductDetails emits "variant-change".
-      // I'll let it bubble or re-emit if needed.
-      // But wait, "Organisms emit upward. Never downward."
-      // If molecule emits `variant-change` and it bubbles through organism, does organism "emit" it? Yes.
-      // But I might want to attach productId or other context.
-
+      e.stopPropagation();
       const detail = (e as CustomEvent).detail;
-      // Re-emit with more context if needed, or just let bubble.
-      // I'll add product context.
-
       const productId = form.getAttribute('data-product-id');
 
       form.dispatchEvent(new CustomEvent('variant-change', {
@@ -139,65 +130,18 @@ const variantOptions = product.variants.map(v => ({
       addBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const productId = form.getAttribute('data-product-id');
-        // I need to get current variant and quantity.
-        // But organism shouldn't store state.
-        // So I rely on props being updated or just emit event saying "add to cart triggered".
-        // The parent (page/layout) should track state.
-        // But wait, if I click add to cart, I need the selected variant ID and quantity.
-        // If I don't store it, how do I know what to add?
-        // Ah, maybe I can read from the DOM inputs?
-        // QuantitySelector has an input. VariantSelector has buttons.
 
-        // However, "Organisms must NOT use global state".
-        // "Organisms must receive all data via props".
-        // If the parent updates props on change, then `selectedVariantId` prop is current.
-        // But `quantity` might not be updated if it's just local interaction until "add".
-        // But `QuantitySelector` is controlled via props?
-        // `QuantitySelector` takes `value`.
-
-        // If the architecture expects the parent to handle state, then `variant-change` and `quantity-change` events update the parent state, which re-renders the organism with new props.
-        // In that case, `props.selectedVariantId` and `props.quantity` are always current.
-        // So I can just emit `add-to-cart` with `props` values?
-        // No, client-side JS (Alpine/React) usually handles this.
-        // Here we are using vanilla JS + Astro (server rendered initially).
-        // If we are using Alpine (as per memory), maybe I should use Alpine for state?
-        // "Do NOT couple to Alpine inside molecules."
-        // "Organisms... emit events."
-
-        // If I use vanilla JS, I can read the current values from the DOM if needed.
-        // `QuantitySelector` input has value.
-        // `VariantSelector` has `data-selected`.
-
-        const qtyInput = form.querySelector('input[type="number"]') as HTMLInputElement;
-        const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
-
-        // For variant, I need to find the selected one.
-        // `VariantSelector` updates its own visual state but doesn't store value in a standard input (it uses buttons).
-        // I should probably read from the `VariantSelector`'s `data-selected` attribute if it updates it?
-        // Let's check `VariantSelector`.
-
-        // `VariantSelector.astro` script:
-        // updates classes.
-        // does NOT update `data-selected` attribute on the container.
-
-        // So I can't easily read selected variant from DOM unless I update `VariantSelector` to store it.
-        // Or I rely on the event payload.
-
-        // Given the constraints, I will emit `add-to-cart` and let the consumer (Organism user) handle the state aggregation.
-        // OR I can make `VariantSelector` update a hidden input?
-        // That would be a good practice for forms.
-
-        // But I can't modify `VariantSelector` now (Phase 4 is done).
-        // Wait, I can if I really need to, but I should try to use it as is.
-        // "Organisms assemble UI."
-
-        // I'll emit `add-to-cart` with just the trigger. The consumer likely tracks the state via the `change` events.
+        // We emit the event. The state is handled by the parent/consumer
+        // which should have the current variant/quantity based on previous change events.
+        // Or we can try to read from DOM if needed, but per architecture, organism shouldn't parse DOM aggressively.
+        // But users expect "add to cart" to take current selection.
+        // If the page re-rendered on change, props are fresh.
+        // If client-side only, the parent script tracks state.
 
         form.dispatchEvent(new CustomEvent('add-to-cart', {
             bubbles: true,
             detail: {
                 productId
-                // consumer should know current state from previous events
             }
         }));
       });

@@ -13,9 +13,10 @@ interface Props {
   logo: string;
   navItems: NavItem[];
   cartCount?: number;
+  showCartBadge?: boolean;
 }
 
-const { logo, navItems, cartCount = 0 } = Astro.props;
+const { logo, navItems, cartCount = 0, showCartBadge = false } = Astro.props;
 ---
 
 <header class="header is-white border-bottom">
@@ -54,7 +55,7 @@ const { logo, navItems, cartCount = 0 } = Astro.props;
       >
         <div class="is-relative">
           <Icon name="cart" size="medium" />
-          {cartCount > 0 && (
+          {showCartBadge && (
             <span class="tag is-danger is-rounded is-small cart-badge">
               {cartCount}
             </span>
@@ -65,18 +66,20 @@ const { logo, navItems, cartCount = 0 } = Astro.props;
   </Container>
 </header>
 
-<style>
+<style lang="scss">
+  @use "../styles/tokens" as *;
+
   .border-bottom {
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid $token-color-border;
   }
   .cart-badge {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -$token-spacing-sm;
+    right: -$token-spacing-sm;
     height: 1.25rem;
     min-width: 1.25rem;
-    padding: 0 0.25rem;
-    font-size: 0.75rem;
+    padding: 0 $token-spacing-xs;
+    font-size: $token-size-xs;
   }
 </style>
 
@@ -89,7 +92,8 @@ const { logo, navItems, cartCount = 0 } = Astro.props;
     if (menuBtn) {
       menuBtn.addEventListener('click', () => {
         header.dispatchEvent(new CustomEvent('menu-toggle', {
-          bubbles: true
+          bubbles: true,
+          detail: {}
         }));
       });
     }
@@ -97,7 +101,8 @@ const { logo, navItems, cartCount = 0 } = Astro.props;
     if (cartBtn) {
       cartBtn.addEventListener('click', () => {
         header.dispatchEvent(new CustomEvent('cart-open', {
-          bubbles: true
+          bubbles: true,
+          detail: {}
         }));
       });
     }
