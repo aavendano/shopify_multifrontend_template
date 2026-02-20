@@ -6,12 +6,16 @@ $token-color-text: #4a4a4a !default;
 $token-color-success: #48c774 !default;
 $token-color-warning: #ffdd57 !default;
 $token-color-danger: #f14668 !default;
+$token-color-border: #dbdbdb !default;
+$token-color-overlay: rgba(0, 0, 0, 0.5) !default;
 
 // Typography
 $token-font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
 $token-font-size-base: 16px !default;
 $token-font-weight-normal: 400 !default;
 $token-font-weight-bold: 700 !default;
+$token-size-xs: 0.75rem !default;
+$token-size-sm: 0.875rem !default;
 
 // Spacing Scale
 $token-spacing-xs: 0.25rem !default;
@@ -32,6 +36,7 @@ $token-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0
 
 // Transitions
 $token-transition-base: all 0.2s ease-in-out !default;
+$token-transition-slow: all 0.3s ease-in-out !default;
 
 // Z-Index Scale
 $token-z-index-10: 10 !default;
