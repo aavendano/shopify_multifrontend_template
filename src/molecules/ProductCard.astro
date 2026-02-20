@@ -32,8 +32,8 @@ const {
 } = Astro.props;
 ---
 
-<div class="product-card card is-hoverable h-100" data-product-id={productId}>
-  <a href={href} class="card-image-link">
+<div class="product-card card is-hoverable has-shadow is-flex is-flex-direction-column" data-product-id={productId}>
+  <a href={href} class="is-block">
     <CardMedia
       src={image}
       alt={title}
@@ -42,7 +42,7 @@ const {
     />
   </a>
 
-  <div class="card-content-wrapper p-4">
+  <div class="p-4 is-flex is-flex-direction-column is-justify-content-space-between is-flex-grow-1">
     <a href={href} class="has-text-black">
       <CardContent
         title={title}
@@ -67,34 +67,6 @@ const {
     )}
   </div>
 </div>
-
-<style lang="scss">
-  @use "../styles/tokens" as *;
-
-  .product-card {
-    transition: transform $token-transition-base, box-shadow $token-transition-base;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    &:hover {
-      transform: translateY(-$token-spacing-xs);
-      box-shadow: $token-shadow-md;
-    }
-  }
-
-  .card-image-link {
-    display: block;
-    overflow: hidden;
-  }
-
-  .card-content-wrapper {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-</style>
 
 <script>
   document.querySelectorAll('.product-card').forEach(card => {
