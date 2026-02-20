@@ -20,47 +20,27 @@ const { images, currentImage, class: className } = Astro.props;
     />
   </div>
 
-  <div class="thumbnails is-flex is-flex-wrap-wrap m-neg-1">
+  <div class="columns is-mobile is-multiline m-0">
     {images.map((img, index) => (
-      <button
-        type="button"
-        class={`thumbnail-btn p-1 border-0 bg-transparent ${img === currentImage ? 'is-active' : ''}`}
-        data-src={img}
-        data-index={index}
-        aria-label={`View image ${index + 1}`}
-      >
-        <Image
-          src={img}
-          alt={`Thumbnail ${index + 1}`}
-          ratio="square"
-          width={80}
-          height={80}
-          class="rounded border"
-        />
-      </button>
+      <div class="column is-one-fifth p-1">
+        <button
+          type="button"
+          class={`thumbnail-btn button is-white p-0 is-clickable is-fullwidth ${img === currentImage ? 'is-primary is-selected' : ''}`}
+          data-src={img}
+          data-index={index}
+          aria-label={`View image ${index + 1}`}
+        >
+          <Image
+            src={img}
+            alt={`Thumbnail ${index + 1}`}
+            ratio="square"
+            class="rounded border"
+          />
+        </button>
+      </div>
     ))}
   </div>
 </div>
-
-<style lang="scss">
-  @use "../styles/tokens" as *;
-
-  .m-neg-1 {
-    margin: -$token-spacing-xs;
-  }
-  .thumbnail-btn {
-    width: 20%;
-    cursor: pointer;
-    transition: transform $token-transition-base;
-  }
-  .thumbnail-btn:hover {
-    transform: scale(1.05);
-  }
-  .thumbnail-btn.is-active img {
-    border-color: var(--bulma-primary);
-    border-width: $token-radius-sm;
-  }
-</style>
 
 <script>
   const gallery = document.querySelector('.product-gallery');

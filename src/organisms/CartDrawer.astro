@@ -23,24 +23,25 @@ interface Props {
 const { isOpen, items, formattedSubtotal } = Astro.props;
 ---
 
-<div class={`cart-drawer-overlay ${isOpen ? 'is-active' : ''}`}>
-  <div class="cart-drawer has-background-white">
-    <div class="cart-header is-flex is-justify-content-space-between is-align-items-center p-4 border-bottom">
+<div class={`modal cart-drawer-overlay ${isOpen ? 'is-active' : ''}`}>
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
       <TextBlock tag="h2" size="4" weight="bold">Your Cart</TextBlock>
       <Button variant="ghost" class="close-btn" aria-label="Close cart">
         <Icon name="close" size="medium" />
       </Button>
-    </div>
+    </header>
 
-    <div class="cart-items p-4">
+    <section class="modal-card-body">
       {items.length === 0 ? (
         <TextBlock tag="p" class="has-text-centered has-text-grey py-6">
           Your cart is empty.
         </TextBlock>
       ) : (
         items.map((item) => (
-          <div class="cart-item is-flex mb-4 pb-4 border-bottom">
-            <div class="cart-item-image mr-3" style="width: 80px;">
+          <div class="cart-item is-flex mb-4 pb-4">
+            <div class="mr-3 is-flex-shrink-0 is-96x96">
               <Image src={item.image} alt={item.title} ratio="square" class="rounded" />
             </div>
             <div class="cart-item-details is-flex-grow-1">
@@ -69,86 +70,33 @@ const { isOpen, items, formattedSubtotal } = Astro.props;
           </div>
         ))
       )}
-    </div>
+    </section>
 
-    <div class="cart-footer p-4 border-top">
-      <div class="is-flex is-justify-content-space-between mb-4">
+    <footer class="modal-card-foot is-flex is-justify-content-space-between is-align-items-center">
+      <div>
         <TextBlock tag="span" weight="bold">Subtotal</TextBlock>
-        <TextBlock tag="span" weight="bold" size="4">
+        <TextBlock tag="span" weight="bold" size="4" class="ml-2">
           {formattedSubtotal}
         </TextBlock>
       </div>
       <Button
         variant="primary"
-        fullWidth={true}
         size="large"
         class="checkout-btn"
         disabled={items.length === 0}
       >
         Checkout
       </Button>
-    </div>
+    </footer>
   </div>
 </div>
-
-<style lang="scss">
-  @use "../styles/tokens" as *;
-
-  .cart-drawer-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: $token-color-overlay;
-    z-index: $token-z-index-40;
-    opacity: 0;
-    visibility: hidden;
-    transition: $token-transition-slow;
-  }
-
-  .cart-drawer-overlay.is-active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .cart-drawer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    max-width: 400px;
-    height: 100%;
-    transform: translateX(100%);
-    transition: $token-transition-slow;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cart-drawer-overlay.is-active .cart-drawer {
-    transform: translateX(0);
-  }
-
-  .cart-items {
-    flex-grow: 1;
-    overflow-y: auto;
-  }
-
-  .border-bottom {
-    border-bottom: 1px solid $token-color-border;
-  }
-  .border-top {
-    border-top: 1px solid $token-color-border;
-  }
-</style>
 
 <script>
   const overlay = document.querySelector('.cart-drawer-overlay');
 
   if (overlay) {
-    // Close events
     overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
+      if ((e.target as HTMLElement).classList.contains('modal-background')) {
         overlay.dispatchEvent(new CustomEvent('close', {
           bubbles: true,
           detail: {}
@@ -166,7 +114,6 @@ const { isOpen, items, formattedSubtotal } = Astro.props;
       });
     }
 
-    // Remove item events
     overlay.querySelectorAll('.remove-item-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
@@ -177,7 +124,6 @@ const { isOpen, items, formattedSubtotal } = Astro.props;
       });
     });
 
-    // Checkout event
     const checkoutBtn = overlay.querySelector('.checkout-btn');
     if (checkoutBtn) {
       checkoutBtn.addEventListener('click', () => {

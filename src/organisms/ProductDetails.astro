@@ -6,32 +6,21 @@ import VariantSelector from '../molecules/VariantSelector.astro';
 import QuantitySelector from '../molecules/QuantitySelector.astro';
 import Button from '../atoms/Button.astro';
 
-interface Variant {
-  id: string;
-  title: string;
-  price: number | string;
-  compareAtPrice?: number | string;
-  stock: number;
-}
-
 interface Product {
   id: string;
   title: string;
   description: string;
-  price: number | string;
-  compareAtPrice?: number | string;
   currency?: string;
-  variants: Variant[];
 }
 
 interface VariantOption {
-    label: string;
-    value: string;
+  label: string;
+  value: string;
 }
 
 interface Props {
   product: Product;
-  selectedVariant?: Variant;
+  selectedVariantId?: string;
   currentPrice: number | string;
   currentComparePrice?: number | string;
   currentStock: number;
@@ -40,13 +29,13 @@ interface Props {
 }
 
 const {
-    product,
-    selectedVariant,
-    currentPrice,
-    currentComparePrice,
-    currentStock,
-    variantOptions,
-    quantity = 1
+  product,
+  selectedVariantId,
+  currentPrice,
+  currentComparePrice,
+  currentStock,
+  variantOptions,
+  quantity = 1
 } = Astro.props;
 ---
 
@@ -74,7 +63,7 @@ const {
     <div class="mb-5">
       <VariantSelector
         options={variantOptions}
-        selected={selectedVariant?.id}
+        selected={selectedVariantId}
         name="Variant"
       />
     </div>
@@ -100,7 +89,6 @@ const {
 
 <script>
   document.querySelectorAll('.product-form').forEach(form => {
-    // Forward variant change
     form.addEventListener('variant-change', (e) => {
       e.stopPropagation();
       const detail = (e as CustomEvent).detail;
@@ -112,7 +100,6 @@ const {
       }));
     });
 
-    // Forward quantity change
     form.addEventListener('quantity-change', (e) => {
       e.stopPropagation();
       const detail = (e as CustomEvent).detail;
@@ -124,25 +111,17 @@ const {
       }));
     });
 
-    // Add to cart
     const addBtn = form.querySelector('.add-to-cart-btn');
     if (addBtn) {
       addBtn.addEventListener('click', (e) => {
         e.preventDefault();
         const productId = form.getAttribute('data-product-id');
 
-        // We emit the event. The state is handled by the parent/consumer
-        // which should have the current variant/quantity based on previous change events.
-        // Or we can try to read from DOM if needed, but per architecture, organism shouldn't parse DOM aggressively.
-        // But users expect "add to cart" to take current selection.
-        // If the page re-rendered on change, props are fresh.
-        // If client-side only, the parent script tracks state.
-
         form.dispatchEvent(new CustomEvent('add-to-cart', {
-            bubbles: true,
-            detail: {
-                productId
-            }
+          bubbles: true,
+          detail: {
+            productId
+          }
         }));
       });
     }

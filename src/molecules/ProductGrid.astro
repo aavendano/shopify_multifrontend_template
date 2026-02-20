@@ -1,28 +1,12 @@
 ---
 import Container from '../atoms/Container.astro';
-import ProductCard from './ProductCard.astro';
-
-interface Product {
-  id: string;
-  title: string;
-  image: string;
-  price: number | string;
-  compareAtPrice?: number | string;
-  currency?: string;
-  badgeText?: string;
-  href: string;
-  stock?: number;
-  lowStockThreshold?: number;
-  showQuickAdd?: boolean;
-}
 
 interface Props {
-  products: Product[];
   columns?: 2 | 3 | 4 | 6;
   fluid?: boolean;
 }
 
-const { products, columns = 4, fluid = false } = Astro.props;
+const { columns = 4, fluid = false } = Astro.props;
 
 const columnMap: Record<number, string> = {
   2: 'is-half',
@@ -37,23 +21,9 @@ const columnClass = columnMap[columns] || 'is-one-quarter';
 <section class="product-grid section">
   <Container fluid={fluid}>
     <div class="columns is-multiline">
-      {products.map((product) => (
-        <div class={`column ${columnClass}-desktop is-half-tablet is-full-mobile`}>
-          <ProductCard
-            productId={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-            compareAtPrice={product.compareAtPrice}
-            currency={product.currency}
-            badgeText={product.badgeText}
-            href={product.href}
-            quantity={product.stock}
-            lowStockThreshold={product.lowStockThreshold}
-            showQuickAdd={product.showQuickAdd}
-          />
-        </div>
-      ))}
+      <div class={`column ${columnClass}-desktop is-half-tablet is-full-mobile`}>
+        <slot />
+      </div>
     </div>
   </Container>
 </section>

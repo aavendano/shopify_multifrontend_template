@@ -1,5 +1,6 @@
 ---
 import ProductGrid from '../molecules/ProductGrid.astro';
+import ProductCard from '../molecules/ProductCard.astro';
 import FiltersPanel from '../organisms/FiltersPanel.astro';
 import Header from '../organisms/Header.astro';
 import Footer from '../organisms/Footer.astro';
@@ -102,8 +103,6 @@ const productDetails = {
     id: 'p1',
     title: 'Super Widget',
     description: 'The best widget ever made.',
-    price: 199.99,
-    compareAtPrice: 249.99,
     currency: 'USD',
     variants: [
         { id: 'v1', title: 'Small', price: 199.99, stock: 10 },
@@ -141,7 +140,7 @@ const cartItems = [
                 currentPrice={productDetails.variants[0].price}
                 currentStock={productDetails.variants[0].stock}
                 variantOptions={productDetails.variants.map(v => ({ label: v.title, value: v.id }))}
-                selectedVariant={productDetails.variants[0]}
+                selectedVariantId={productDetails.variants[0].id}
             />
         </div>
     </div>
@@ -149,7 +148,7 @@ const cartItems = [
     <div class="section">
         <div class="container">
             <h2 class="title is-4">ProductGallery</h2>
-            <div style="max-width: 500px;">
+            <div class="is-inline-block">
                 <ProductGallery
                     images={['https://via.placeholder.com/500', 'https://via.placeholder.com/500/000000/ffffff', 'https://via.placeholder.com/500/ff0000/ffffff']}
                     currentImage="https://via.placeholder.com/500"
@@ -161,7 +160,25 @@ const cartItems = [
     <div class="section">
         <div class="container">
             <h2 class="title is-4">ProductGrid & Card</h2>
-            <ProductGrid products={products} columns={4} />
+            <ProductGrid columns={4}>
+                <div class="columns is-multiline">
+                  {products.map((product) => (
+                    <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile">
+                      <ProductCard
+                        productId={product.id}
+                        title={product.title}
+                        image={product.image}
+                        price={product.price}
+                        compareAtPrice={product.compareAtPrice}
+                        badgeText={product.badgeText}
+                        href={product.href}
+                        quantity={product.stock}
+                        showQuickAdd={true}
+                      />
+                    </div>
+                  ))}
+                </div>
+            </ProductGrid>
         </div>
     </div>
 
@@ -186,7 +203,24 @@ const cartItems = [
         </div>
     </div>
 
-    <RelatedProducts products={products.slice(0, 3)} />
+    <RelatedProducts>
+      <div class="columns is-multiline">
+        {products.slice(0, 3).map((product) => (
+          <div class="column is-one-third">
+            <ProductCard
+              productId={product.id}
+              title={product.title}
+              image={product.image}
+              price={product.price}
+              compareAtPrice={product.compareAtPrice}
+              badgeText={product.badgeText}
+              href={product.href}
+              quantity={product.stock}
+            />
+          </div>
+        ))}
+      </div>
+    </RelatedProducts>
 
     <div id="event-log" style="position: fixed; bottom: 0; right: 0; background: rgba(0,0,0,0.8); color: white; padding: 10px; max-height: 200px; overflow: auto; z-index: 1000; width: 300px;">
         Logs will appear here...

@@ -20,12 +20,12 @@ interface Props {
 const { links, copyright } = Astro.props;
 ---
 
-<footer class="footer has-background-light py-6">
+<footer class="footer has-background-light py-6 has-shadow">
   <Container>
     <div class="columns is-multiline">
       {links.map((group) => (
         <div class="column is-one-quarter-desktop is-half-tablet is-full-mobile">
-          <TextBlock tag="h4" size="5" weight="semibold" class="mb-4 text-primary">
+          <TextBlock tag="h4" size="5" weight="semibold" class="mb-4 has-text-primary">
             {group.title}
           </TextBlock>
           <ul>
@@ -41,18 +41,10 @@ const { links, copyright } = Astro.props;
       ))}
     </div>
 
-    <div class="mt-6 pt-5 border-top has-text-centered">
+    <div class="mt-6 pt-5 has-text-centered">
       <TextBlock tag="p" size="7" color="grey">
         {copyright}
       </TextBlock>
     </div>
   </Container>
 </footer>
-
-<style lang="scss">
-  @use "../styles/tokens" as *;
-
-  .border-top {
-    border-top: 1px solid $token-color-border;
-  }
-</style>

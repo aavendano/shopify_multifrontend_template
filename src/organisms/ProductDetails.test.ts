@@ -20,7 +20,7 @@ describe('ProductDetails', () => {
           currentPrice: 100,
           currentStock: 10,
           variantOptions: [{ label: 'Default', value: 'v1' }],
-          selectedVariant: product.variants[0]
+          selectedVariantId: product.variants[0].id
       }
     });
     expect(result).toContain('Product Title');
@@ -45,7 +45,7 @@ describe('ProductDetails', () => {
           currentPrice: 100,
           currentStock: 0,
           variantOptions: [{ label: 'Default', value: 'v1' }],
-          selectedVariant: product.variants[0]
+          selectedVariantId: product.variants[0].id
       }
     });
     expect(result).toContain('Out of Stock');
