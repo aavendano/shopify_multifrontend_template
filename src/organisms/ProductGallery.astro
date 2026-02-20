@@ -3,13 +3,11 @@ import Image from '../atoms/Image.astro';
 
 interface Props {
   images: string[];
-  selectedImage?: string;
+  currentImage: string;
   class?: string;
 }
 
-const { images, selectedImage, class: className } = Astro.props;
-
-const currentImage = selectedImage || images[0];
+const { images, currentImage, class: className } = Astro.props;
 ---
 
 <div class={`product-gallery ${className || ''}`}>
@@ -44,21 +42,23 @@ const currentImage = selectedImage || images[0];
   </div>
 </div>
 
-<style>
+<style lang="scss">
+  @use "../styles/tokens" as *;
+
   .m-neg-1 {
-    margin: -0.25rem;
+    margin: -$token-spacing-xs;
   }
   .thumbnail-btn {
     width: 20%;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform $token-transition-base;
   }
   .thumbnail-btn:hover {
     transform: scale(1.05);
   }
   .thumbnail-btn.is-active img {
     border-color: var(--bulma-primary);
-    border-width: 2px;
+    border-width: $token-radius-sm;
   }
 </style>
 
@@ -66,12 +66,8 @@ const currentImage = selectedImage || images[0];
   const gallery = document.querySelector('.product-gallery');
   if (gallery) {
     gallery.querySelectorAll('.thumbnail-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         const src = btn.getAttribute('data-src');
-
-        // Optimistic update (optional, but good UX)
-        // Actually, organisms shouldn't manage state, but they can update their view if they are self-contained or rely on parent re-render.
-        // But here we emit event.
 
         gallery.dispatchEvent(new CustomEvent('image-change', {
           detail: { src },

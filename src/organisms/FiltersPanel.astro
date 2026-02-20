@@ -1,7 +1,6 @@
 ---
 import FormField from '../molecules/FormField.astro';
 import Button from '../atoms/Button.astro';
-import Label from '../atoms/Label.astro';
 
 interface FilterOption {
   label: string;
@@ -115,21 +114,9 @@ const { filters, selectedFilters } = Astro.props;
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(form);
-      const data: Record<string, any> = {};
-
-      for (const [key, value] of formData.entries()) {
-        if (data[key]) {
-          if (!Array.isArray(data[key])) {
-            data[key] = [data[key]];
-          }
-          data[key].push(value);
-        } else {
-          data[key] = value;
-        }
-      }
 
       form.dispatchEvent(new CustomEvent('filter-change', {
-        detail: data,
+        detail: { formData },
         bubbles: true
       }));
     });
@@ -139,7 +126,7 @@ const { filters, selectedFilters } = Astro.props;
       clearBtn.addEventListener('click', () => {
         form.reset();
         form.dispatchEvent(new CustomEvent('filter-change', {
-          detail: {},
+          detail: { formData: new FormData(form) },
           bubbles: true
         }));
       });

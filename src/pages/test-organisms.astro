@@ -1,6 +1,5 @@
 ---
-import ProductCard from '../organisms/ProductCard.astro';
-import ProductGrid from '../organisms/ProductGrid.astro';
+import ProductGrid from '../molecules/ProductGrid.astro';
 import FiltersPanel from '../organisms/FiltersPanel.astro';
 import Header from '../organisms/Header.astro';
 import Footer from '../organisms/Footer.astro';
@@ -48,7 +47,21 @@ const products = [
     }
 ];
 
-const filters = [
+interface FilterOption {
+  label: string;
+  value: string;
+}
+
+interface Filter {
+  id: string;
+  label: string;
+  type: 'text' | 'range' | 'checkbox' | 'radio';
+  options?: FilterOption[];
+  min?: number;
+  max?: number;
+}
+
+const filters: Filter[] = [
     { id: 'search', label: 'Search', type: 'text' },
     { id: 'price', label: 'Price Range', type: 'range', min: 0, max: 1000 },
     {
@@ -91,6 +104,7 @@ const productDetails = {
     description: 'The best widget ever made.',
     price: 199.99,
     compareAtPrice: 249.99,
+    currency: 'USD',
     variants: [
         { id: 'v1', title: 'Small', price: 199.99, stock: 10 },
         { id: 'v2', title: 'Medium', price: 219.99, stock: 5 },
@@ -104,7 +118,7 @@ const cartItems = [
         productId: '1',
         title: 'Product 1',
         image: 'https://via.placeholder.com/80',
-        price: 99.99,
+        formattedPrice: '$99.99',
         quantity: 2
     }
 ];
@@ -117,12 +131,18 @@ const cartItems = [
     <title>Organisms Test</title>
 </head>
 <body class="has-navbar-fixed-top">
-    <Header logo="MyStore" navItems={navItems} cartCount={2} />
+    <Header logo="MyStore" navItems={navItems} cartCount={2} showCartBadge={true} />
 
     <div class="section">
         <div class="container">
             <h2 class="title is-4">ProductDetails</h2>
-            <ProductDetails product={productDetails} />
+            <ProductDetails
+                product={productDetails}
+                currentPrice={productDetails.variants[0].price}
+                currentStock={productDetails.variants[0].stock}
+                variantOptions={productDetails.variants.map(v => ({ label: v.title, value: v.id }))}
+                selectedVariant={productDetails.variants[0]}
+            />
         </div>
     </div>
 
@@ -130,7 +150,10 @@ const cartItems = [
         <div class="container">
             <h2 class="title is-4">ProductGallery</h2>
             <div style="max-width: 500px;">
-                <ProductGallery images={['https://via.placeholder.com/500', 'https://via.placeholder.com/500/000000/ffffff', 'https://via.placeholder.com/500/ff0000/ffffff']} />
+                <ProductGallery
+                    images={['https://via.placeholder.com/500', 'https://via.placeholder.com/500/000000/ffffff', 'https://via.placeholder.com/500/ff0000/ffffff']}
+                    currentImage="https://via.placeholder.com/500"
+                />
             </div>
         </div>
     </div>
@@ -159,7 +182,7 @@ const cartItems = [
     <div class="section">
         <div class="container">
             <h2 class="title is-4">CartDrawer (Click Cart Icon in Header to Open)</h2>
-            <CartDrawer isOpen={false} items={cartItems} subtotal={199.98} />
+            <CartDrawer isOpen={false} items={cartItems} formattedSubtotal="$199.98" />
         </div>
     </div>
 
@@ -173,7 +196,7 @@ const cartItems = [
 
     <script>
         const logEl = document.getElementById('event-log');
-        const log = (msg) => {
+        const log = (msg: string) => {
             if (logEl) {
                 const div = document.createElement('div');
                 div.textContent = msg;
