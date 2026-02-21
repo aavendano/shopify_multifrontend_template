@@ -1,15 +1,78 @@
 ---
+/**
+ * Button Component
+ *
+ * A versatile button component that supports various styles, sizes, and states.
+ * Wraps either a `<button>` or `<a>` tag depending on the `href` prop.
+ *
+ * @example
+ * <Button variant="primary" size="large" onClick={() => console.log('clicked')}>
+ *   Click Me
+ * </Button>
+ */
 interface Props {
+  /**
+   * The visual style variant.
+   * @default 'primary'
+   */
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark' | 'link' | 'white' | 'black' | 'text' | 'ghost';
+
+  /**
+   * The size of the button.
+   * @default 'normal'
+   */
   size?: 'small' | 'normal' | 'medium' | 'large';
+
+  /**
+   * If provided, renders an anchor tag instead of a button.
+   */
   href?: string;
+
+  /**
+   * The HTML button type.
+   * @default 'button'
+   */
   type?: 'button' | 'submit' | 'reset';
+
+  /**
+   * Disables the button interaction.
+   * @default false
+   */
   disabled?: boolean;
+
+  /**
+   * Makes the button span the full width of its container.
+   * @default false
+   */
   fullWidth?: boolean;
+
+  /**
+   * Shows a loading spinner.
+   * @default false
+   */
   loading?: boolean;
+
+  /**
+   * Applies an outlined style.
+   * @default false
+   */
   outlined?: boolean;
+
+  /**
+   * Inverts the colors.
+   * @default false
+   */
   inverted?: boolean;
+
+  /**
+   * Applies rounded corners.
+   * @default false
+   */
   rounded?: boolean;
+
+  /**
+   * Additional CSS classes.
+   */
   class?: string;
 }
 
