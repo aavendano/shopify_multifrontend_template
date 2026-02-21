@@ -3,17 +3,37 @@ import CardMedia from './CardMedia.astro';
 import CardContent from './CardContent.astro';
 import Button from '../atoms/Button.astro';
 
+/**
+ * Product Card Component
+ *
+ * Displays a summary of a product including image, title, price, and an optional "Quick Add" button.
+ * It is composed of `CardMedia` and `CardContent` molecules.
+ *
+ * @event add-to-cart - Dispatched when the "Quick Add" button is clicked.
+ * Detail: `{ productId: string }`
+ */
 interface Props {
+  /** The unique identifier for the product. */
   productId: string;
+  /** The product title. */
   title: string;
+  /** The URL of the product image. */
   image: string;
+  /** The current price. */
   price: number | string;
+  /** The original price (if on sale). */
   compareAtPrice?: number | string;
+  /** The currency code. */
   currency?: string;
+  /** Text for an overlay badge (e.g., "New"). */
   badgeText?: string;
+  /** The URL to the product detail page. */
   href: string;
+  /** The current stock quantity. */
   quantity?: number;
+  /** The threshold for low stock warning. */
   lowStockThreshold?: number;
+  /** Whether to show the "Add to Cart" button. @default false */
   showQuickAdd?: boolean;
 }
 
