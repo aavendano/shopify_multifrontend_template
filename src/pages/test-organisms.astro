@@ -236,7 +236,9 @@ const cartItems = [
                 div.textContent = msg;
                 logEl.prepend(div);
             }
-            console.log(msg);
+            if (import.meta.env.DEV) {
+                console.log(msg);
+            }
         };
 
         // Event logging
