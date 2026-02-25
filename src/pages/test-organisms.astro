@@ -244,7 +244,27 @@ const cartItems = [
         // Event logging
         document.body.addEventListener('add-to-cart', (e) => log(`Event: add-to-cart ${JSON.stringify((e as CustomEvent).detail)}`));
         document.body.addEventListener('variant-change', (e) => log(`Event: variant-change ${JSON.stringify((e as CustomEvent).detail)}`));
-        document.body.addEventListener('filter-change', (e) => log(`Event: filter-change ${JSON.stringify((e as CustomEvent).detail)}`));
+
+        document.body.addEventListener('filter-change', (e) => {
+            const detail = (e as CustomEvent).detail;
+            if (detail && detail.formData instanceof FormData) {
+                const data: Record<string, any> = {};
+                detail.formData.forEach((value, key) => {
+                    if (data[key]) {
+                        if (!Array.isArray(data[key])) {
+                            data[key] = [data[key]];
+                        }
+                        data[key].push(value);
+                    } else {
+                        data[key] = value;
+                    }
+                });
+                log(`Event: filter-change ${JSON.stringify({ ...detail, formData: data })}`);
+            } else {
+                log(`Event: filter-change ${JSON.stringify(detail)}`);
+            }
+        });
+
         document.body.addEventListener('image-change', (e) => log(`Event: image-change ${JSON.stringify((e as CustomEvent).detail)}`));
         document.body.addEventListener('menu-toggle', () => log('Event: menu-toggle'));
 
