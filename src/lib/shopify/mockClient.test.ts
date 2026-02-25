@@ -12,6 +12,7 @@ describe('getProductVariant', () => {
     expect(variant?.price).toEqual({ amount: '19.99', currencyCode: 'USD' });
     expect(variant?.availableForSale).toBe(true);
     expect(variant?.quantityAvailable).toBe(100);
+    expect(variant?.compareAtPrice).toBeUndefined();
   });
 
   it('should return sale variant', async () => {
@@ -20,6 +21,7 @@ describe('getProductVariant', () => {
     expect(variant).not.toBeNull();
     expect(variant?.price).toEqual({ amount: '14.99', currencyCode: 'USD' });
     expect(variant?.compareAtPrice).toEqual({ amount: '19.99', currencyCode: 'USD' });
+    expect(variant?.availableForSale).toBe(true);
   });
 
   it('should return out of stock variant', async () => {
@@ -28,6 +30,7 @@ describe('getProductVariant', () => {
     expect(variant).not.toBeNull();
     expect(variant?.availableForSale).toBe(false);
     expect(variant?.quantityAvailable).toBe(0);
+    expect(variant?.compareAtPrice).toBeUndefined();
   });
 
   it('should return limited variant', async () => {
@@ -35,5 +38,11 @@ describe('getProductVariant', () => {
 
     expect(variant).not.toBeNull();
     expect(variant?.quantityAvailable).toBe(5);
+    expect(variant?.availableForSale).toBe(true);
+  });
+
+  it('should return null for missing variant', async () => {
+    const variant = await getProductVariant('missing');
+    expect(variant).toBeNull();
   });
 });
