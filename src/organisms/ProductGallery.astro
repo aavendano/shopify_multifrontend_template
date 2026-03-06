@@ -45,15 +45,16 @@ const { images, currentImage, class: className } = Astro.props;
 <script>
   const gallery = document.querySelector('.product-gallery');
   if (gallery) {
-    gallery.querySelectorAll('.thumbnail-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
+    gallery.addEventListener('click', (e) => {
+      const btn = e.target.closest('.thumbnail-btn');
+      if (btn) {
         const src = btn.getAttribute('data-src');
 
         gallery.dispatchEvent(new CustomEvent('image-change', {
           detail: { src },
           bubbles: true
         }));
-      });
+      }
     });
   }
 </script>
