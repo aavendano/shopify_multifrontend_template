@@ -52,6 +52,10 @@ export async function getProductVariant(variantId: string): Promise<ProductVaria
   // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 50));
 
+  if (variantId === 'missing') {
+    return null;
+  }
+
   const base: ProductVariant = {
     id: variantId,
     title: `Product Variant ${variantId}`,

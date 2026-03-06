@@ -78,12 +78,38 @@ describe('Image Atom', () => {
       props: {
         src: 'test.jpg',
         alt: 'Test Image',
-        loading: 'lazy',
         'data-testid': 'test-img'
       }
     });
 
-    expect(result).toContain('loading="lazy"');
     expect(result).toContain('data-testid="test-img"');
+  });
+
+  it('includes loading="lazy" and decoding="async" by default', async () => {
+    const container = await experimental_AstroContainer.create();
+    const result = await container.renderToString(Image, {
+      props: {
+        src: 'test.jpg',
+        alt: 'Test Image',
+      }
+    });
+
+    expect(result).toContain('loading="lazy"');
+    expect(result).toContain('decoding="async"');
+  });
+
+  it('allows overriding loading and decoding attributes', async () => {
+    const container = await experimental_AstroContainer.create();
+    const result = await container.renderToString(Image, {
+      props: {
+        src: 'test.jpg',
+        alt: 'Test Image',
+        loading: 'eager',
+        decoding: 'sync'
+      }
+    });
+
+    expect(result).toContain('loading="eager"');
+    expect(result).toContain('decoding="sync"');
   });
 });
