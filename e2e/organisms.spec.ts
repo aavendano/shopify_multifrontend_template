@@ -54,4 +54,73 @@ test.describe('Organisms', () => {
     const drawer = page.locator('.cart-drawer-overlay');
     await expect(drawer).toHaveClass(/is-active/);
   });
+
+  test('CartDrawer handles close event via button', async ({ page }) => {
+    // Open cart first
+    const cartBtn = page.locator('.cart-toggle-btn');
+    await cartBtn.click();
+    const drawer = page.locator('.cart-drawer-overlay');
+    await expect(drawer).toHaveClass(/is-active/);
+
+    // Click close button
+    const closeBtn = drawer.locator('.close-btn');
+    await closeBtn.click();
+
+    // Check log
+    const log = page.locator('#event-log');
+    await expect(log).toContainText('Event: close (cart)');
+
+    // Drawer should no longer be active
+    await expect(drawer).not.toHaveClass(/is-active/);
+  });
+
+  test('CartDrawer handles close event via modal background', async ({ page }) => {
+    // Open cart first
+    const cartBtn = page.locator('.cart-toggle-btn');
+    await cartBtn.click();
+    const drawer = page.locator('.cart-drawer-overlay');
+    await expect(drawer).toHaveClass(/is-active/);
+
+    // Click background
+    const background = drawer.locator('.modal-background');
+    await background.click({ position: { x: 10, y: 10 } });
+
+    // Check log
+    const log = page.locator('#event-log');
+    await expect(log).toContainText('Event: close (cart)');
+
+    // Drawer should no longer be active
+    await expect(drawer).not.toHaveClass(/is-active/);
+  });
+
+  test('CartDrawer handles remove-item event', async ({ page }) => {
+    // Open cart
+    const cartBtn = page.locator('.cart-toggle-btn');
+    await cartBtn.click();
+
+    // Click remove on the first item
+    const drawer = page.locator('.cart-drawer-overlay');
+    const removeBtn = drawer.locator('.remove-item-btn').first();
+    await removeBtn.click();
+
+    // Check log
+    const log = page.locator('#event-log');
+    await expect(log).toContainText('Event: remove-item');
+    await expect(log).toContainText('c1');
+  });
+
+  test('CartDrawer handles checkout event', async ({ page }) => {
+    // Open cart
+    const cartBtn = page.locator('.cart-toggle-btn');
+    await cartBtn.click();
+
+    // Click checkout
+    const drawer = page.locator('.cart-drawer-overlay');
+    const checkoutBtn = drawer.locator('.checkout-btn');
+    await checkoutBtn.click();
+
+    // Check log
+    const log = page.locator('#event-log');
+    await expect(log).toContainText('Event: checkout');
+  });
 });
