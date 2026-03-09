@@ -523,3 +523,65 @@ Run in verbose mode to see all warnings.
 
 02:14:21 [200] /test-organisms 22ms
 02:14:34 [200] /test-organisms 25ms
+03:11:02 Configuration file updated. Restarting...
+03:11:03 [watch] src/molecules/QuantitySelector.astro
+03:11:03 [watch] src/organisms/CartDrawer.astro
+03:11:03 [watch] src/organisms/ProductGallery.astro
+03:11:03 [watch] src/pages/test-organisms.astro
+03:11:03 [vite] Re-optimizing dependencies because vite config has changed
+03:11:03 [content] Syncing content
+03:11:03 [content] Synced content
+03:11:03 [types] Generated 392ms
+03:11:03 [vite] Re-optimizing dependencies because vite config has changed
+03:11:03 [ERROR] [vite] Error:   Failed to scan for dependencies from entries:
+  /app/src/atoms/Badge.astro
+/app/src/atoms/Button.astro
+/app/src/atoms/Container.astro
+/app/src/atoms/Icon.astro
+/app/src/atoms/Image.astro
+/app/src/atoms/Input.astro
+/app/src/atoms/Label.astro
+/app/src/atoms/PriceLabel.astro
+/app/src/atoms/Spacer.astro
+/app/src/atoms/StockLabel.astro
+/app/src/atoms/TextBlock.astro
+/app/src/layouts/BaseLayout.astro
+/app/src/molecules/BreadcrumbItem.astro
+/app/src/molecules/CardContent.astro
+/app/src/molecules/CardMedia.astro
+/app/src/molecules/FormField.astro
+/app/src/molecules/ProductCard.astro
+/app/src/molecules/ProductGrid.astro
+/app/src/molecules/ProductPrice.astro
+/app/src/molecules/ProductStockIndicator.astro
+/app/src/molecules/QuantitySelector.astro
+/app/src/molecules/VariantSelector.astro
+/app/src/organisms/CartDrawer.astro
+/app/src/organisms/FiltersPanel.astro
+/app/src/organisms/Footer.astro
+/app/src/organisms/Header.astro
+/app/src/organisms/ProductDetails.astro
+/app/src/organisms/ProductGallery.astro
+/app/src/organisms/RelatedProducts.astro
+/app/src/pages/index.astro
+/app/src/pages/test-atoms.astro
+/app/src/pages/test-molecules.astro
+/app/src/pages/test-organisms.astro
+
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mUnexpected "<<"[0m
+
+    script:/app/src/organisms/ProductGallery.astro?id=0:5:0:
+[37m      5 │ [32m<<[37m<<<<< HEAD
+        ╵ [32m~~[0m
+
+
+    at failureErrorWithLog (/app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:1467:15)
+    at /app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:926:25
+    at runOnEndCallbacks (/app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:1307:45)
+    at buildResponseToResult (/app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:924:7)
+    at /app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:936:9
+    at new Promise (<anonymous>)
+    at requestCallbacks.on-end (/app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:935:54)
+    at handleRequest (/app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:628:17)
+    at handleIncomingPacket (/app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:653:7)
+    at Socket.readFromStdout (/app/node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild/lib/main.js:581:7)
