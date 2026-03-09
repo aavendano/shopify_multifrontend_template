@@ -16,6 +16,7 @@ if (axis === 'both') classes = `m-${size}`;
 if (axis === 'x') classes = `mx-${size}`;
 if (axis === 'y') classes = `my-${size}`;
 
+const finalClass = [classes, className].filter(Boolean).join(' ');
 ---
 
-<div class={`${classes} ${className}`}></div>
+<div class={finalClass}></div>
