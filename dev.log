@@ -1,0 +1,525 @@
+
+> app@0.0.1 dev /app
+> astro dev
+
+02:13:45 [types] Generated 1ms
+02:13:45 [content] Syncing content
+02:13:45 [content] Synced content
+02:13:45 [vite] Re-optimizing dependencies because vite config has changed
+
+ astro  v5.17.2 ready in 206 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+02:13:46 watching for file changes...
+
+ update  ▶ New version of Astro available: 5.18.0
+  Run pnpm dlx @astrojs/upgrade to update
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+18 │ @import "bulma/sass/utilities/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 18:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+21 │ @import "bulma/sass/base/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 21:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+24 │ @import "bulma/sass/elements/box";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 24:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+25 │ @import "bulma/sass/elements/button";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 25:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+26 │ @import "bulma/sass/elements/content";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 26:9  root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): 2; else: 1)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+289 │   @for $i from if($minus, 2, 1) through string.length($value) {
+    │                ^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 289:16  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+294 │         if($minus, -$result, $result),
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 294:9  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1       @import
+    src/styles/main.scss 18:9                                                              root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+309 │   @return if($minus, -$result, $result);
+    │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 309:11  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "right"; else: "left")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+412 │   $normal: if($right, "right", "left");
+    │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 412:12  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "left"; else: "right")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+413 │   $opposite: if($right, "left", "right");
+    │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 413:14  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+WARNING: 20 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+18 │ @import "bulma/sass/utilities/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 18:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+21 │ @import "bulma/sass/base/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 21:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+24 │ @import "bulma/sass/elements/box";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 24:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+25 │ @import "bulma/sass/elements/button";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 25:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+26 │ @import "bulma/sass/elements/content";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 26:9  root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): 2; else: 1)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+289 │   @for $i from if($minus, 2, 1) through string.length($value) {
+    │                ^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 289:16  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+294 │         if($minus, -$result, $result),
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 294:9  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1       @import
+    src/styles/main.scss 18:9                                                              root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+309 │   @return if($minus, -$result, $result);
+    │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 309:11  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "right"; else: "left")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+412 │   $normal: if($right, "right", "left");
+    │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 412:12  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "left"; else: "right")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+413 │   $opposite: if($right, "left", "right");
+    │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 413:14  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+WARNING: 20 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.
+
+02:14:05 [200] /test-organisms 2039ms
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+18 │ @import "bulma/sass/utilities/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 18:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+21 │ @import "bulma/sass/base/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 21:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+24 │ @import "bulma/sass/elements/box";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 24:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+25 │ @import "bulma/sass/elements/button";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 25:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+26 │ @import "bulma/sass/elements/content";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 26:9  root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): 2; else: 1)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+289 │   @for $i from if($minus, 2, 1) through string.length($value) {
+    │                ^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 289:16  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+294 │         if($minus, -$result, $result),
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 294:9  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1       @import
+    src/styles/main.scss 18:9                                                              root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+309 │   @return if($minus, -$result, $result);
+    │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 309:11  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "right"; else: "left")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+412 │   $normal: if($right, "right", "left");
+    │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 412:12  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "left"; else: "right")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+413 │   $opposite: if($right, "left", "right");
+    │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 413:14  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+02:14:05 [vite] ✨ new dependencies optimized: alpinejs
+02:14:05 [vite] ✨ optimized dependencies changed. reloading
+02:14:06 [200] /test-organisms 19ms
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+18 │ @import "bulma/sass/utilities/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 18:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+21 │ @import "bulma/sass/base/_index";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 21:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+24 │ @import "bulma/sass/elements/box";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 24:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+25 │ @import "bulma/sass/elements/button";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 25:9  root stylesheet
+
+DEPRECATION WARNING [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+   ╷
+26 │ @import "bulma/sass/elements/content";
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   ╵
+    src/styles/main.scss 26:9  root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): 2; else: 1)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+289 │   @for $i from if($minus, 2, 1) through string.length($value) {
+    │                ^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 289:16  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+294 │         if($minus, -$result, $result),
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 294:9  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1       @import
+    src/styles/main.scss 18:9                                                              root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($minus): -$result; else: $result)
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+309 │   @return if($minus, -$result, $result);
+    │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/functions.scss 309:11  @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/_index.scss 5:1        @import
+    src/styles/main.scss 18:9                                                               root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "right"; else: "left")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+412 │   $normal: if($right, "right", "left");
+    │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 412:12  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+DEPRECATION WARNING [if-function]: The Sass if() syntax is deprecated in favor of the modern CSS syntax.
+
+Suggestion: if(sass($right): "left"; else: "right")
+
+More info: https://sass-lang.com/d/if-function
+
+    ╷
+413 │   $opposite: if($right, "left", "right");
+    │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ╵
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/utilities/mixins.scss 413:14  @use
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/generic.scss 3:1         @forward
+    node_modules/.pnpm/bulma@1.0.4/node_modules/bulma/sass/base/_index.scss 5:1          @import
+    src/styles/main.scss 21:9                                                            root stylesheet
+
+WARNING: 20 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.
+
+WARNING: 20 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.
+
+02:14:21 [200] /test-organisms 22ms
+02:14:34 [200] /test-organisms 25ms
