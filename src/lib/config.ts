@@ -43,7 +43,7 @@ export async function getSites(): Promise<string[]> {
     const validSites = sites.filter((site: string | null): site is string => site !== null);
     sitesCache = validSites;
     return validSites;
-  } catch (error) {
+  } catch {
     return [];
   }
 }
@@ -59,8 +59,8 @@ export async function getThemeConfig(siteId: string): Promise<SiteConfig> {
     const config = JSON.parse(content);
     siteConfigCache[siteId] = config;
     return config;
-  } catch (error: any) {
-    if (error.code === 'ENOENT') {
+  } catch (error: unknown) {
+    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
       throw new Error(`Theme config not found for site: ${siteId}`);
     }
     throw error;
@@ -78,8 +78,8 @@ export async function getRoutesConfig(siteId: string): Promise<SiteRoutes> {
     const config = JSON.parse(content);
     siteRoutesCache[siteId] = config;
     return config;
-  } catch (error: any) {
-    if (error.code === 'ENOENT') {
+  } catch (error: unknown) {
+    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
       throw new Error(`Routes config not found for site: ${siteId}`);
     }
     throw error;
