@@ -22,9 +22,21 @@ interface Props {
 }
 
 const { filters, selectedFilters } = Astro.props;
+
+// Start measuring render time right before the template executes
+const renderStartTime = performance.now();
+
+// Pre-compute sets for checkbox filters to avoid Array.includes inside map loops
+const selectedFilterSets: Record<string, Set<string>> = {};
+for (const filter of filters) {
+  if (filter.type === 'checkbox') {
+    const selected = selectedFilters[filter.id];
+    selectedFilterSets[filter.id] = new Set(Array.isArray(selected) ? selected : []);
+  }
+}
 ---
 
-<div class="filters-panel box">
+<div class="filters-panel box" data-render-time={performance.now() - renderStartTime}>
   <form id="filters-form">
     {filters.map((filter) => (
       <div class="filter-group mb-5">
@@ -73,7 +85,7 @@ const { filters, selectedFilters } = Astro.props;
                   type="checkbox"
                   name={filter.id}
                   value={option.value}
-                  checked={Array.isArray(selectedFilters[filter.id]) && selectedFilters[filter.id].includes(option.value)}
+                  checked={selectedFilterSets[filter.id]?.has(option.value)}
                   class="mr-2"
                 />
                 {option.label}
