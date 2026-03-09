@@ -25,4 +25,4 @@ const classes = [
 ].filter(Boolean).join(' ');
 ---
 
-<input class={classes} {...rest} />
+<input class={classes} aria-invalid={error ? "true" : undefined} {...rest} />

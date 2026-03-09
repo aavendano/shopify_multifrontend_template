@@ -18,7 +18,7 @@ interface Filter {
 
 interface Props {
   filters: Filter[];
-  selectedFilters: Record<string, any>;
+  selectedFilters: Record<string, string | number | string[] | undefined>;
 }
 
 const { filters, selectedFilters } = Astro.props;
@@ -73,7 +73,7 @@ const { filters, selectedFilters } = Astro.props;
                   type="checkbox"
                   name={filter.id}
                   value={option.value}
-                  checked={Array.isArray(selectedFilters[filter.id]) && selectedFilters[filter.id].includes(option.value)}
+                  checked={Array.isArray(selectedFilters[filter.id]) && (selectedFilters[filter.id] as string[]).includes(option.value)}
                   class="mr-2"
                 />
                 {option.label}
