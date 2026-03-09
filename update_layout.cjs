@@ -1,4 +1,8 @@
----
+const fs = require('fs');
+
+const path = 'src/layouts/BaseLayout.astro';
+
+const newScript = `---
 import '../styles/main.scss';
 const { title = 'Demo' } = Astro.props;
 
@@ -6,7 +10,7 @@ const { title = 'Demo' } = Astro.props;
 const isProd = import.meta.env.MODE === 'production';
 const scriptSrc = isProd ? "'self'" : "'self' 'unsafe-inline' 'unsafe-eval'";
 const styleSrc = "'self' 'unsafe-inline'"; // Keep unsafe-inline for styles as Astro often injects them
-const csp = `default-src 'self'; script-src ${scriptSrc}; style-src ${styleSrc}; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;`;
+const csp = \`default-src 'self'; script-src \${scriptSrc}; style-src \${styleSrc}; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;\`;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -19,4 +23,7 @@ const csp = `default-src 'self'; script-src ${scriptSrc}; style-src ${styleSrc};
 <body>
   <slot />
 </body>
-</html>
+</html>`;
+
+fs.writeFileSync(path, newScript, 'utf-8');
+console.log('Updated BaseLayout.astro');

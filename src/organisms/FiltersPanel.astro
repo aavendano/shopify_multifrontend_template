@@ -18,7 +18,7 @@ interface Filter {
 
 interface Props {
   filters: Filter[];
-  selectedFilters: Record<string, any>;
+  selectedFilters: Record<string, string | number | string[] | undefined>;
 }
 
 const { filters, selectedFilters } = Astro.props;

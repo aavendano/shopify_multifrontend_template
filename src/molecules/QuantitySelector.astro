@@ -55,7 +55,7 @@ const { value = 1, min = 1, max = 99 } = Astro.props;
     const min = parseInt(selector.getAttribute('data-min') || '1');
     const max = parseInt(selector.getAttribute('data-max') || '99');
 
-    const update = (newValue) => {
+    const update = (newValue: number) => {
       if (newValue < min || newValue > max) return;
 
       input.value = newValue.toString();

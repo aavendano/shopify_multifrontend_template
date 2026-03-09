@@ -30,21 +30,21 @@ const { options, selected, name } = Astro.props;
 
 <script>
   document.querySelectorAll('.variant-selector').forEach(selector => {
+    let currentlySelectedBtn = selector.querySelector('.variant-option:not(.is-outlined)');
+
     selector.addEventListener('click', (e) => {
       const target = (e.target as Element).closest('.variant-option');
-      if (!target) return;
+      if (!target || target === currentlySelectedBtn) return;
 
       const value = target.getAttribute('data-value');
       const label = selector.querySelector('label')?.textContent;
 
-      // Update visual state
-      selector.querySelectorAll('.variant-option').forEach(btn => {
-        if (btn === target) {
-            btn.classList.remove('is-outlined');
-        } else {
-            btn.classList.add('is-outlined');
-        }
-      });
+      // Update visual state efficiently
+      if (currentlySelectedBtn) {
+          currentlySelectedBtn.classList.add('is-outlined');
+      }
+      target.classList.remove('is-outlined');
+      currentlySelectedBtn = target;
 
       // Emit event
       selector.dispatchEvent(new CustomEvent('variant-change', {

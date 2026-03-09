@@ -11,9 +11,10 @@ const {
   class: className,
 } = Astro.props;
 
-let status = 'in-stock';
+
 let text = 'In Stock';
 let color = 'success';
+let status = 'in-stock';
 
 if (quantity === 0) {
   status = 'out-of-stock';
