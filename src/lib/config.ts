@@ -43,7 +43,7 @@ export async function getSites(): Promise<string[]> {
     const validSites = sites.filter((site: string | null): site is string => site !== null);
     sitesCache = validSites;
     return validSites;
-  } catch (error) {
+  } catch {
     return [];
   }
 }
