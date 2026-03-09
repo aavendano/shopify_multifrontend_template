@@ -29,10 +29,15 @@ const { options, selected, name } = Astro.props;
 </div>
 
 <script>
-  document.querySelectorAll('.variant-selector').forEach(selector => {
-    selector.addEventListener('click', (e) => {
+  if (!window._hasVariantSelectorListener) {
+    window._hasVariantSelectorListener = true;
+
+    document.addEventListener('click', (e) => {
       const target = (e.target as Element).closest('.variant-option');
       if (!target) return;
+
+      const selector = target.closest('.variant-selector');
+      if (!selector) return;
 
       const value = target.getAttribute('data-value');
       const label = selector.querySelector('label')?.textContent;
@@ -52,5 +57,5 @@ const { options, selected, name } = Astro.props;
         bubbles: true
       }));
     });
-  });
+  }
 </script>
