@@ -50,6 +50,11 @@ const { images, currentImage, class: className } = Astro.props;
       if (!target) return;
       const btn = target.closest('.thumbnail-btn');
       if (btn) {
+        gallery.querySelectorAll('.thumbnail-btn').forEach(b => {
+          b.classList.remove('is-primary', 'is-selected');
+        });
+        btn.classList.add('is-primary', 'is-selected');
+
         const src = btn.getAttribute('data-src');
 
         gallery.dispatchEvent(new CustomEvent('image-change', {
