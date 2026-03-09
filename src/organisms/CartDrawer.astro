@@ -114,15 +114,21 @@ const { isOpen, items, formattedSubtotal } = Astro.props;
       });
     }
 
-    overlay.querySelectorAll('.remove-item-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-id');
-        overlay.dispatchEvent(new CustomEvent('remove-item', {
-          detail: { id },
-          bubbles: true
-        }));
+    const modalBody = overlay.querySelector('.modal-card-body');
+    if (modalBody) {
+      modalBody.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement).closest('.remove-item-btn');
+        if (btn) {
+          const id = btn.getAttribute('data-id');
+          if (id) {
+            overlay.dispatchEvent(new CustomEvent('remove-item', {
+              detail: { id },
+              bubbles: true
+            }));
+          }
+        }
       });
-    });
+    }
 
     const checkoutBtn = overlay.querySelector('.checkout-btn');
     if (checkoutBtn) {
