@@ -160,9 +160,9 @@ export const cartItems: CartItem[] = [
 ];
 
 export const galleryImages = [
-    'https://via.placeholder.com/500',
-    'https://via.placeholder.com/500/000000/ffffff',
-    'https://via.placeholder.com/500/ff0000/ffffff'
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><rect width="500" height="500" fill="%23ccc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Image 1</text></svg>',
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><rect width="500" height="500" fill="%23000"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23fff">Image 2</text></svg>',
+    'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><rect width="500" height="500" fill="%23f00"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23fff">Image 3</text></svg>'
 ];
 
 export const copyright = '© 2023 MyStore. All rights reserved.';

@@ -32,14 +32,34 @@ test.describe('Organisms', () => {
     await expect(log).toContainText('widget');
   });
 
-  test('ProductGallery handles interactions', async ({ page }) => {
-    const secondThumbnail = page.locator('.product-gallery .thumbnail-btn').nth(1);
-    await secondThumbnail.scrollIntoViewIfNeeded();
+  test('ProductGallery handles interactions and states', async ({ page }) => {
+    const gallery = page.locator('.product-gallery');
+    await gallery.scrollIntoViewIfNeeded();
+
+    const thumbnails = gallery.locator('.thumbnail-btn');
+
+    // Initial state: first thumbnail should be selected
+    await expect(thumbnails.nth(0)).toHaveClass(/is-primary/);
+    await expect(thumbnails.nth(0)).toHaveClass(/is-selected/);
+    await expect(thumbnails.nth(1)).not.toHaveClass(/is-primary/);
+
+    // Click second thumbnail
+    const secondThumbnail = thumbnails.nth(1);
     await secondThumbnail.click();
 
-    // Check log
+    // Verify visual state updated
+    await expect(thumbnails.nth(0)).not.toHaveClass(/is-primary/);
+    await expect(thumbnails.nth(0)).not.toHaveClass(/is-selected/);
+    await expect(secondThumbnail).toHaveClass(/is-primary/);
+    await expect(secondThumbnail).toHaveClass(/is-selected/);
+
+    // Verify event emitted with correct payload
+    // We expect the image data URI as the src
+    const src = await secondThumbnail.getAttribute('data-src');
+    const expectedPayload = JSON.stringify({ src });
+
     const log = page.locator('#event-log');
-    await expect(log).toContainText('Event: image-change');
+    await expect(log).toContainText(`Event: image-change ${expectedPayload}`);
   });
 
   test('Header emits cart-open and CartDrawer opens', async ({ page }) => {
