@@ -16,11 +16,11 @@ let text = 'In Stock';
 let color = 'success';
 
 if (quantity === 0) {
-  status = 'out-of-stock';
+  let status = 'out-of-stock';
   text = 'Out of Stock';
   color = 'danger';
 } else if (quantity < threshold) {
-  status = 'low-stock';
+  let status = 'low-stock';
   text = `Only ${quantity} left!`;
   color = 'warning';
 }
