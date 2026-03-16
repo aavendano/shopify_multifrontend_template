@@ -34,7 +34,7 @@ const { options, selected, name } = Astro.props;
 
     document.addEventListener('click', (e) => {
       const target = (e.target as Element).closest('.variant-option');
-      if (!target) return;
+      if (!target || target === currentlySelectedBtn) return;
 
       const selector = target.closest('.variant-selector');
       if (!selector) return;
