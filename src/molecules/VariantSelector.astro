@@ -29,12 +29,18 @@ const { options, selected, name } = Astro.props;
 </div>
 
 <script>
-  document.querySelectorAll('.variant-selector').forEach(selector => {
-    let currentlySelectedBtn = selector.querySelector('.variant-option:not(.is-outlined)');
+  if (!window._hasVariantSelectorListener) {
+    window._hasVariantSelectorListener = true;
 
-    selector.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
       const target = (e.target as Element).closest('.variant-option');
       if (!target || target === currentlySelectedBtn) return;
+
+      const selector = target.closest('.variant-selector');
+      if (!selector) return;
+
+      const currentlySelectedBtn = selector.querySelector('.variant-option:not(.is-outlined)');
+      if (target === currentlySelectedBtn) return;
 
       const value = target.getAttribute('data-value');
       const label = selector.querySelector('label')?.textContent;
@@ -44,7 +50,6 @@ const { options, selected, name } = Astro.props;
           currentlySelectedBtn.classList.add('is-outlined');
       }
       target.classList.remove('is-outlined');
-      currentlySelectedBtn = target;
 
       // Emit event
       selector.dispatchEvent(new CustomEvent('variant-change', {
@@ -52,5 +57,5 @@ const { options, selected, name } = Astro.props;
         bubbles: true
       }));
     });
-  });
+  }
 </script>
