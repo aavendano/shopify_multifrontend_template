@@ -22,6 +22,14 @@ interface Props {
 }
 
 const { filters, selectedFilters } = Astro.props;
+
+// Pre-compute sets for checkbox filters for O(1) lookups
+const checkboxSelections = new Map<string, Set<string>>();
+filters.forEach(f => {
+  if (f.type === 'checkbox' && Array.isArray(selectedFilters[f.id])) {
+    checkboxSelections.set(f.id, new Set(selectedFilters[f.id] as string[]));
+  }
+});
 ---
 
 <div class="filters-panel box">
@@ -73,7 +81,7 @@ const { filters, selectedFilters } = Astro.props;
                   type="checkbox"
                   name={filter.id}
                   value={option.value}
-                  checked={Array.isArray(selectedFilters[filter.id]) && (selectedFilters[filter.id] as string[]).includes(option.value)}
+                  checked={checkboxSelections.has(filter.id) ? checkboxSelections.get(filter.id)!.has(option.value) : false}
                   class="mr-2"
                 />
                 {option.label}
