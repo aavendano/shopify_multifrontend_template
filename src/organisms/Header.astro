@@ -3,11 +3,7 @@ import Container from '../atoms/Container.astro';
 import TextBlock from '../atoms/TextBlock.astro';
 import Icon from '../atoms/Icon.astro';
 import Button from '../atoms/Button.astro';
-
-interface NavItem {
-  label: string;
-  href: string;
-}
+import type { NavItem } from '../lib/types';
 
 interface Props {
   logo: string;

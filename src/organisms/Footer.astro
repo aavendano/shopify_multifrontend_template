@@ -1,16 +1,7 @@
 ---
 import Container from '../atoms/Container.astro';
 import TextBlock from '../atoms/TextBlock.astro';
-
-interface LinkItem {
-  label: string;
-  href: string;
-}
-
-interface LinkGroup {
-  title: string;
-  items: LinkItem[];
-}
+import type { LinkGroup } from '../lib/types';
 
 interface Props {
   links: LinkGroup[];

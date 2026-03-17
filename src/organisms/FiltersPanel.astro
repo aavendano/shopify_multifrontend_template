@@ -1,20 +1,7 @@
 ---
 import FormField from '../molecules/FormField.astro';
 import Button from '../atoms/Button.astro';
-
-interface FilterOption {
-  label: string;
-  value: string;
-}
-
-interface Filter {
-  id: string;
-  label: string;
-  type: 'text' | 'range' | 'checkbox' | 'radio';
-  options?: FilterOption[];
-  min?: number;
-  max?: number;
-}
+import type { Filter } from '../lib/types';
 
 interface Props {
   filters: Filter[];
