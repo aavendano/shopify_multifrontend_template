@@ -24,6 +24,18 @@ let sitesCache: string[] | null = null;
 const siteConfigCache: Record<string, SiteConfig> = {};
 const siteRoutesCache: Record<string, SiteRoutes> = {};
 
+/**
+ * Resolves a path within the SITES_DIR, preventing path traversal.
+ */
+function resolveSitePath(siteId: string, filename: string): string {
+  const resolvedPath = path.resolve(SITES_DIR, siteId, filename);
+  const normalizedSitesDir = SITES_DIR.endsWith(path.sep) ? SITES_DIR : SITES_DIR + path.sep;
+  if (!resolvedPath.startsWith(normalizedSitesDir)) {
+    throw new Error(`Invalid site ID: ${siteId}`);
+  }
+  return resolvedPath;
+}
+
 export async function getSites(): Promise<string[]> {
   if (sitesCache !== null) {
     return sitesCache;
@@ -53,7 +65,7 @@ export async function getThemeConfig(siteId: string): Promise<SiteConfig> {
     return siteConfigCache[siteId];
   }
 
-  const configPath = path.join(SITES_DIR, siteId, 'theme.config.json');
+  const configPath = resolveSitePath(siteId, 'theme.config.json');
   try {
     const content = await fs.readFile(configPath, 'utf-8');
     const config = JSON.parse(content);
@@ -72,7 +84,7 @@ export async function getRoutesConfig(siteId: string): Promise<SiteRoutes> {
     return siteRoutesCache[siteId];
   }
 
-  const configPath = path.join(SITES_DIR, siteId, 'routes.config.json');
+  const configPath = resolveSitePath(siteId, 'routes.config.json');
   try {
     const content = await fs.readFile(configPath, 'utf-8');
     const config = JSON.parse(content);
