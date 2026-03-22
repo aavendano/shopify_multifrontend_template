@@ -112,14 +112,12 @@ import '../styles/main.scss';
             const output = document.getElementById('variant-output');
             // detail.name might be undefined if not passed to VariantSelector props "name"
             if (output) output.textContent = `Selected: ${detail.value} (${detail.name || 'Variant'})`;
-            console.log('Variant Change:', detail);
         });
 
         document.addEventListener('quantity-change', (e) => {
             const detail = (e as CustomEvent).detail;
             const output = document.getElementById('quantity-output');
             if (output) output.textContent = `Quantity: ${detail.value}`;
-            console.log('Quantity Change:', detail);
         });
     </script>
 </body>
