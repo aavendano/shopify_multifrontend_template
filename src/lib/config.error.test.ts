@@ -36,4 +36,22 @@ describe('Config Loader Error Handling', () => {
 
         await expect(getThemeConfig('non-existent-site')).rejects.toThrowError(/Theme config not found for site: non-existent-site/);
     });
+
+    it('should re-throw non-ENOENT error from getRoutesConfig', async () => {
+        const error = new Error('Permission Denied');
+        (error as any).code = 'EACCES';
+        vi.mocked(fs.readFile).mockRejectedValue(error);
+
+        await expect(getRoutesConfig('protected-site')).rejects.toThrow('Permission Denied');
+        await expect(getRoutesConfig('protected-site')).rejects.toHaveProperty('code', 'EACCES');
+    });
+
+    it('should re-throw non-ENOENT error from getThemeConfig', async () => {
+        const error = new Error('Permission Denied');
+        (error as any).code = 'EACCES';
+        vi.mocked(fs.readFile).mockRejectedValue(error);
+
+        await expect(getThemeConfig('protected-site')).rejects.toThrow('Permission Denied');
+        await expect(getThemeConfig('protected-site')).rejects.toHaveProperty('code', 'EACCES');
+    });
 });
