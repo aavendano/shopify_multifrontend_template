@@ -30,17 +30,11 @@ export async function getSites(): Promise<string[]> {
   }
 
   try {
-    const files = await fs.readdir(SITES_DIR);
-    const sites = await Promise.all(files.map(async (file: string) => {
-      try {
-        const stat = await fs.stat(path.join(SITES_DIR, file));
-        return stat.isDirectory() ? file : null;
-      } catch {
-        return null;
-      }
-    }));
+    const entries = await fs.readdir(SITES_DIR, { withFileTypes: true });
+    const validSites = entries
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
 
-    const validSites = sites.filter((site: string | null): site is string => site !== null);
     sitesCache = validSites;
     return validSites;
   } catch {
